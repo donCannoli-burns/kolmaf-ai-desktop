@@ -1,0 +1,84 @@
+{
+  "schema": "kolmaf-ai-desktop-dependencies/v1",
+  "platform": "linux",
+  "generated_at": "2026-09-27",
+  "policy": {
+    "vendor_dependencies": false,
+    "installation_owner": "kolmafia-git",
+    "documentation_is_authority": false,
+    "runtime_verification_required_for_version_sensitive_facts": true
+  },
+  "dependencies": [
+    {
+      "id": "kol-html-matrix",
+      "required": true,
+      "repository": "donCannoli-burns/kol-html-matrix",
+      "branch": "main",
+      "reviewed_commit": "caa77c9dedde07727f0aa2a553ca24247d6c052a",
+      "install_command": "git checkout donCannoli-burns/kol-html-matrix",
+      "update_command": "git update kol-html-matrix",
+      "role": [
+        "human-relay-knowledge-ui",
+        "agent-retrieval-plane",
+        "provenance-index"
+      ],
+      "authority": "reference-only",
+      "installed_surfaces": [
+        "~/.kolmafia/data/html-matrix/FOR-AGENT.html",
+        "~/.kolmafia/data/html-matrix/agent-master-index.json",
+        "~/.kolmafia/data/html-matrix/hyper-data.json",
+        "~/.kolmafia/data/html-matrix/source-manifest.json",
+        "~/.kolmafia/relay/html-matrix/index.html"
+      ]
+    },
+    {
+      "id": "kol-goblin-docs",
+      "required": true,
+      "repository": "donCannoli-burns/kol-goblin-docs",
+      "branch": "main",
+      "reviewed_commit": "6c4c516c312a79a6eeeff164982ddebcce79fff0",
+      "install_command": "git checkout https://github.com/donCannoli-burns/kol-goblin-docs",
+      "setup_command": "kol-goblin-docs setup",
+      "update_command": "update-llm",
+      "role": [
+        "agent-navigation-map",
+        "runtime-documentation",
+        "human-relay-doc-editor"
+      ],
+      "authority": "navigation-context-only",
+      "installed_surfaces": [
+        "~/.kolmafia/data/kol-goblin-docs/README.html",
+        "~/.kolmafia/data/kol-goblin-docs/runtime.tsv",
+        "~/.kolmafia/relay/relay_kol-goblin-docs.ash"
+      ]
+    },
+    {
+      "id": "kol-ash-it-down",
+      "required": true,
+      "repository": "donCannoli-burns/kol-ash-it-down",
+      "branch": "main",
+      "reviewed_commit": "ce2d07fb7cd03a47c0d5ee241ddcca5bedcdbc7d",
+      "install_command": "git checkout https://github.com/donCannoli-burns/kol-ash-it-down.git",
+      "update_command": "git update donCannoli-burns-kol-ash-it-down",
+      "role": [
+        "bounded-document-bridge",
+        "format-conversion",
+        "gcli-correlation-evidence",
+        "session-tail-capture",
+        "local-audit-memory"
+      ],
+      "authority": "local-document-and-evidence-only",
+      "optional_service": {
+        "name": "kol-doc-edit",
+        "bind": "127.0.0.1",
+        "port": 61337
+      },
+      "installed_surfaces": [
+        "~/.kolmafia/git/donCannoli-burns-kol-ash-it-down/",
+        "~/.kolmafia/relay/doc_edit.ash",
+        "~/.kolmafia/data/doc_edit/",
+        "~/.kolmafia/sessions/active_session.<player>"
+      ]
+    }
+  ]
+}

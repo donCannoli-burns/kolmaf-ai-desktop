@@ -1,0 +1,36 @@
+# Local secrets / credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+daily-hash*
+service.token
+
+# Runtime state / evidence
+sessions/
+logs/
+state/
+runtime/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Python / test / build
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Node / web build cache
+node_modules/
+.npm/
