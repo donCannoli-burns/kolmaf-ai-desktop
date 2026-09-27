@@ -45,20 +45,20 @@ Latest archived verification supplied with the project:
 
 This repository scaffold does not fabricate the working source from historical summaries. The working Linux tree should be imported here as the source of truth.
 
-## Official dependencies
+## KoLmafia companion tools
 
-The Linux desktop requires these KoLmafia-side projects:
+The Linux desktop works with:
 
 1. `donCannoli-burns/kol-goblin-docs`
 2. `donCannoli-burns/kol-html-matrix`
 3. `donCannoli-burns/kol-ash-it-down`
 
-They are installed independently through KoLmafia Git and consumed through their installed `data/`, `relay/`, `scripts/`, session-evidence, and localhost service surfaces.
+They are maintained separately and consumed through their installed `data/`, `relay/`, `scripts/`, session-evidence, and localhost service surfaces.
 
 See:
 
-- [DEPENDENCIES.md](DEPENDENCIES.md)
-- [dependencies.json](dependencies.json)
+- [TOOLS.md](TOOLS.md)
+- [tools.json](tools.json)
 
 ## Repository boundary
 
@@ -69,8 +69,8 @@ Recommended Linux layout as the working tree is imported:
 ```text
 linux/
 ├── README.md
-├── DEPENDENCIES.md
-├── dependencies.json
+├── TOOLS.md
+├── tools.json
 ├── src/
 ├── tests/
 ├── scripts/

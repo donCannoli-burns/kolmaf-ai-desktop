@@ -1,8 +1,6 @@
-# Official Linux Dependencies
+# KoLmafia Companion Tools
 
-These three projects are first-class external dependencies of Kolmaf-AI Desktop on Linux.
-
-They are intentionally maintained in their own repositories and installed into KoLmafia with its Git script installer. Kolmaf-AI Desktop should **discover and use the installed surfaces**, not copy their source into this repository.
+These projects are maintained in their own repositories and installed into KoLmafia with its Git script installer. Kolmaf-AI Desktop should discover and use their installed surfaces rather than copy their source into this repository.
 
 ## 1. kol-html-matrix
 
@@ -42,12 +40,7 @@ Primary installed agent surfaces:
 ~/.kolmafia/data/html-matrix/source-manifest.json
 ```
 
-Desktop contract:
-
-- use as retrieval/reference;
-- preserve source IDs/provenance when practical;
-- do not treat a matrix result as execution permission;
-- re-check live/version-sensitive facts against installed KoLmafia runtime evidence.
+Use it as retrieval/reference material. Preserve source IDs/provenance when practical, do not treat a matrix result as execution permission, and re-check live/version-sensitive facts against installed KoLmafia runtime evidence.
 
 ## 2. kol-goblin-docs
 
@@ -92,12 +85,7 @@ Primary installed agent surface:
 ~/.kolmafia/data/kol-goblin-docs/README.html
 ```
 
-Desktop contract:
-
-- use for navigation and local-area context;
-- preserve user-edited docs and backups;
-- never interpret documentation presence or wording as permission;
-- verify installed runtime truth before relying on a documented command/function.
+Use it for navigation and local-area context. Preserve user-edited docs and backups, never interpret documentation presence or wording as permission, and verify installed runtime truth before relying on a documented command/function.
 
 ## 3. kol-ash-it-down
 
@@ -154,14 +142,9 @@ Primary installed/runtime surfaces:
 ~/.kolmafia/sessions/active_session.<player>
 ```
 
-Desktop contract:
+Use it for bounded local document operations, conversions, evidence capture, and its own audit queries. Retain preview → confirm → backup → atomic write → event-record semantics. Do not turn its Python service into a KoL mutation path. A session marker proves the gCLI marker path ran, not that an unrelated KoL mutation succeeded.
 
-- use for bounded local document operations, conversions, evidence capture, and its own audit queries;
-- retain preview → confirm → backup → atomic write → event-record semantics;
-- do not turn its Python service into a KoL mutation path;
-- a session marker proves the gCLI marker path ran, not that an unrelated KoL mutation succeeded.
-
-## Recommended install/order
+## Suggested install order
 
 For a fresh KoLmafia home:
 
@@ -174,14 +157,4 @@ kol-goblin-docs setup
 
 Then configure/start the Ash-It-Down Conda service outside gCLI when that capability is needed.
 
-## Readiness behavior
-
-Kolmaf-AI Desktop should eventually expose one dependency/readiness check that reports, separately:
-
-- installed checkout present;
-- expected installed data/relay/script surface present;
-- dependency revision/update state when knowable;
-- optional localhost service health for Ash-It-Down;
-- no secret values.
-
-A missing dependency should be a visible readiness failure/degradation, not an excuse to silently create an alternate ungoverned execution path.
+Kolmaf-AI Desktop may expose a readiness view showing whether each expected checkout/surface is present, whether the optional Ash-It-Down localhost service is healthy, and whether a reviewed revision has changed. It must not expose secret values or silently create an alternate ungoverned execution path when one of these projects is unavailable.

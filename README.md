@@ -12,30 +12,30 @@ The current development line is **Linux** and lives under:
 
 Platform-specific source, tests, launchers, and packaging should stay inside their platform directory. Shared repository-level documentation may remain at the root.
 
-## Official KoLmafia-side dependencies
+## Official KoLmafia companion tools
 
-Kolmaf-AI Desktop depends on three separately maintained KoLmafia Git projects:
+Kolmaf-AI Desktop works with three separately maintained KoLmafia projects:
 
-| Dependency | Role |
+| Tool | Role |
 |---|---|
 | [kol-goblin-docs](https://github.com/donCannoli-burns/kol-goblin-docs) | Agent-first runtime/navigation documentation map for the installed KoLmafia tree |
 | [kol-html-matrix](https://github.com/donCannoli-burns/kol-html-matrix) | Human relay UI + machine-readable KoLmafia scripting/retrieval knowledge plane |
 | [kol-ash-it-down](https://github.com/donCannoli-burns/kol-ash-it-down) | Bounded document conversion/edit bridge, gCLI correlation evidence, session-tail capture, and local audit memory |
 
-These are **external dependencies**, not vendored copies. They remain installed and updated through KoLmafia's Git checkout mechanism.
+They stay in their own repositories and are installed/updated through KoLmafia's Git checkout mechanism.
 
-The Linux dependency contract and reviewed revisions are recorded in:
+Linux integration notes and reviewed revisions are recorded in:
 
 ```text
-linux/DEPENDENCIES.md
-linux/dependencies.json
+linux/TOOLS.md
+linux/tools.json
 ```
 
 ## Integration rule
 
-The three dependency projects provide context, evidence, documentation, and bounded local tooling. Their presence does not create execution authority.
+These projects provide context, evidence, documentation, and bounded local tooling. Their presence does not create execution authority.
 
-Kolmaf-AI Desktop must preserve the upstream boundaries:
+Kolmaf-AI Desktop must preserve their existing boundaries:
 
 - Goblin Docs documentation is navigation/context, not permission.
 - HTML Matrix retrieval/reference material is not execution authority.

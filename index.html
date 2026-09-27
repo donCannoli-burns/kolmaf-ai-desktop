@@ -303,12 +303,12 @@
     .risk-item p { margin: 0; color: var(--ink-soft); }
     .risk-item.critical { border-left: 4px solid var(--warn); padding-left: 13px; }
 
-    .plugin {
+    .tool-card {
       min-height: 100%;
       display: flex;
       flex-direction: column;
     }
-    .plugin .repo-link {
+    .tool-card .repo-link {
       margin-top: auto;
       padding-top: 19px;
       display: inline-flex;
@@ -319,8 +319,8 @@
       text-decoration-thickness: 1px;
       text-underline-offset: 4px;
     }
-    .plugin .repo-link:hover { color: var(--accent-ink); }
-    .plugin-index {
+    .tool-card .repo-link:hover { color: var(--accent-ink); }
+    .tool-index {
       display: grid;
       grid-template-columns: 82px 1fr;
       gap: 14px;
@@ -329,8 +329,8 @@
       background: var(--paper-2);
       border-left: 5px solid var(--black);
     }
-    .plugin-index .mini { font-size: 9px; line-height: 1.7; text-transform: uppercase; color: var(--muted); }
-    .plugin-index p { font-size: 15px; }
+    .tool-index .mini { font-size: 9px; line-height: 1.7; text-transform: uppercase; color: var(--muted); }
+    .tool-index p { font-size: 15px; }
 
     .credit-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .credit { border-top: 2px solid var(--black); padding-top: 13px; }
@@ -406,7 +406,7 @@
       <nav class="nav" aria-label="Page navigation">
         <a href="#how">How it works</a>
         <a href="#safety">Use safely</a>
-        <a href="#plugins">Plugins</a>
+        <a href="#tools">Tools</a>
         <a href="#contribute">Contribute</a>
         <a class="repo" href="https://github.com/donCannoli-burns/kolmaf-ai-desktop">GitHub ↗</a>
       </nav>
@@ -565,9 +565,9 @@
       </div>
     </section>
 
-    <section id="plugins">
+    <section id="tools">
       <div class="section-head">
-        <h2>Plugin constellation</h2>
+        <h2>Tool constellation</h2>
         <p>Seven companion projects give Kolmaf-AI safer places to test, retrieve, remember, document, and package task guidance instead of asking one model prompt to do everything.</p>
       </div>
       <div class="cards">
@@ -583,11 +583,11 @@
           </div>
         </article>
 
-        <article class="card span-6 plugin">
-          <div class="label">Plugin 01 / isolated testing</div>
+        <article class="card span-6 tool-card">
+          <div class="label">Tool 01 / isolated testing</div>
           <h3>kol-agent-sandbox</h3>
           <p>Builds a mirrored agent test environment around a pinned <span class="mono">loathers/kolmafia-mock</span>, with code-oriented live directories mirrored read-only and agent edits kept in a separate work area.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>boundary<br>ties in</div>
             <p><strong>Safe proving ground.</strong><br>It deliberately excludes settings, sessions, cookies, password hashes, and login material. A mock failure never authorizes falling through to live KoLmafia.</p>
           </div>
@@ -595,11 +595,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/kol-agent-sandbox">Open kol-agent-sandbox on GitHub ↗</a>
         </article>
 
-        <article class="card span-6 plugin">
-          <div class="label">Plugin 02 / typed game data</div>
+        <article class="card span-6 tool-card">
+          <div class="label">Tool 02 / typed game data</div>
           <h3>tokens-of-loathing</h3>
           <p>A fork/compatibility line of <span class="mono">data-of-loathing</span>: typed Kingdom of Loathing game data served through SQLite, with an Express transport, TypeScript client, MCP surface, and a compatibility bridge used by the agent sandbox.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>boundary<br>ties in</div>
             <p><strong>Queryable facts.</strong><br>It gives tools a structured data source and supplies the verified SQLite compatibility layer that materializes the pinned KoLmafia mock used by the sandbox.</p>
           </div>
@@ -607,11 +607,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/tokens-of-loathing">Open tokens-of-loathing on GitHub ↗</a>
         </article>
 
-        <article class="card span-4 plugin">
-          <div class="label">Plugin 03 / local memory</div>
+        <article class="card span-4 tool-card">
+          <div class="label">Tool 03 / local memory</div>
           <h3>kol-agent-memory</h3>
           <p>Creates a KoLmafia-local, cross-indexed memory tree for humans and coding agents, with distinct SYSTEM, STATE, LOCAL, and ROUTING planes plus vector, graph, and Q-table indexes.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>authority<br>surface</div>
             <p><strong>Context that survives.</strong><br>Its routing indexes help find memory; they do not become authority over live game state.</p>
           </div>
@@ -619,11 +619,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/kol-agent-memory">Open kol-agent-memory on GitHub ↗</a>
         </article>
 
-        <article class="card span-4 plugin">
-          <div class="label">Plugin 04 / skill bus</div>
+        <article class="card span-4 tool-card">
+          <div class="label">Tool 04 / skill bus</div>
           <h3>kolmafia-skills</h3>
           <p>A KoLmafia-native agent skill bus built around a spaceless <span class="mono">/skill@...</span> gCLI namespace. Skills live in native aliases and can be listed, synchronized, created, and invoked through the relay.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>authority<br>surface</div>
             <p><strong>Task guidance injection.</strong><br>The Python bridge remains read-only. Skill prompts are guidance, not execution authorization.</p>
           </div>
@@ -631,11 +631,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/kolmafia-skills">Open kolmafia-skills on GitHub ↗</a>
         </article>
 
-        <article class="card span-4 plugin">
-          <div class="label">Plugin 05 / documents + evidence</div>
+        <article class="card span-4 tool-card">
+          <div class="label">Tool 05 / documents + evidence</div>
           <h3>kol-ash-it-down</h3>
           <p>A local-first KoLmafia relay/document bridge for bounded text editing, cross-format conversion, gCLI correlation markers, session-tail evidence, status artifacts, and local SQLite audit memory.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>authority<br>surface</div>
             <p><strong>Files and evidence.</strong><br>The Python/Conda service is deliberately not a second KoL executor. Writes are previewed, backed up, path-guarded, atomic, and logged.</p>
           </div>
@@ -643,11 +643,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/kol-ash-it-down">Open kol-ash-it-down on GitHub ↗</a>
         </article>
 
-        <article class="card span-6 plugin">
-          <div class="label">Plugin 06 / navigation + docs</div>
+        <article class="card span-6 tool-card">
+          <div class="label">Tool 06 / navigation + docs</div>
           <h3>kol-goblin-docs</h3>
           <p>An agent-first map of the local KoLmafia tree, presented as editable HTML5 documentation. It gives both humans and agents a top-level starting point, branch-by-branch context, runtime snapshots, and a low-friction relay editor.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>authority<br>surface</div>
             <p><strong>Navigation / context.</strong><br>It helps the model find and understand the right local area, but a README does not grant permission to execute anything.</p>
           </div>
@@ -655,11 +655,11 @@
           <a class="repo-link" href="https://github.com/donCannoli-burns/kol-goblin-docs">Open kol-goblin-docs on GitHub ↗</a>
         </article>
 
-        <article class="card span-6 plugin">
-          <div class="label">Plugin 07 / retrieval + knowledge plane</div>
+        <article class="card span-6 tool-card">
+          <div class="label">Tool 07 / retrieval + knowledge plane</div>
           <h3>kol-html-matrix</h3>
           <p>A local-first KoLmafia scripting matrix with a human relay interface and a machine-readable agent plane. It exposes structured nodes, workflows, use cases, provenance, stable IDs, and <span class="mono">mem://</span> references so the model can retrieve instead of free-associate.</p>
-          <div class="plugin-index">
+          <div class="tool-index">
             <div class="mini">role<br>authority<br>surface</div>
             <p><strong>Reference / retrieval.</strong><br>It can tell the model what is relevant and where the evidence came from; it is not an execution authority.</p>
           </div>
@@ -702,12 +702,12 @@
         <div>
           <div class="eyebrow">Discussion is part of the build</div>
           <h2>Questions, testing, pushback, patches — welcome.</h2>
-          <p>If you use KoLmafia and think the model boundary is wrong, a tool contract is confusing, the Linux setup is too brittle, or a plugin should expose better evidence, say so. Useful criticism is part of making an AI integration safer and less annoying.</p>
+          <p>If you use KoLmafia and think the model boundary is wrong, a tool contract is confusing, the Linux setup is too brittle, or a tool should expose better evidence, say so. Useful criticism is part of making an AI integration safer and less annoying.</p>
           <div class="badge-row">
             <span class="badge">Linux testers</span>
             <span class="badge">KoLmafia veterans</span>
             <span class="badge">docs + UX</span>
-            <span class="badge">plugin authors</span>
+            <span class="badge">tool authors</span>
             <span class="badge machine">cross-platform help</span>
           </div>
         </div>
