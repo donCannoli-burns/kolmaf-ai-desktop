@@ -1,4 +1,5 @@
 name: Deploy static site to Pages
+# fresh deployment after custom-domain reset
 
 on:
   push:
