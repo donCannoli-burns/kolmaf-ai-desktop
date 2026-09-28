@@ -136,6 +136,7 @@ Kolmaf-AI is intentionally split across several small projects rather than askin
 | [kol-ash-it-down](https://github.com/donCannoli-burns/kol-ash-it-down) | Bounded local document/edit/convert bridge, gCLI correlation evidence, session-tail capture, and local audit memory | Not a second KoL mutation executor |
 | [kol-goblin-docs](https://github.com/donCannoli-burns/kol-goblin-docs) | Agent-first HTML5 map of the local KoLmafia tree and editable runtime documentation | Navigation/context only; documentation does not grant authority |
 | [kol-html-matrix](https://github.com/donCannoli-burns/kol-html-matrix) | Human relay UI plus machine-readable KoLmafia scripting/retrieval matrix | Reference/retrieval only; provenance helps grounding, not authorization |
+| [kingdomsitter](https://github.com/donCannoli-burns/kingdomsitter) | Go + Tree-sitter ASH language sidecar with typed IR, agent-readable analysis, and ASH → TypeScript/Libram emission | Language/tooling bridge only in v0; KoLmafia remains authoritative for live game state and mutations |
 
 A shorthand view:
 
@@ -147,13 +148,14 @@ skills    → task guidance
 ash-it-down → bounded files + evidence
 goblin docs → navigate the local runtime
 html matrix → retrieve grounded references
+kingdomsitter → parse, type, analyze, and bridge ASH
 desktop   → workspace + proposal + policy gate
 KoLmafia  → runtime truth
 ```
 
 ### Current integration metadata
 
-The broader ecosystem above contains seven projects. The Linux integration manifest in this repository currently records the three reviewed runtime-facing companion surfaces:
+The broader ecosystem above contains eight projects. The Linux integration manifest in this repository currently records the three reviewed runtime-facing companion surfaces:
 
 - `kol-goblin-docs`
 - `kol-html-matrix`

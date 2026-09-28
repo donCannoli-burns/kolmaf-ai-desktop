@@ -568,13 +568,13 @@
     <section id="tools">
       <div class="section-head">
         <h2>Tool constellation</h2>
-        <p>Seven companion projects give Kolmaf-AI safer places to test, retrieve, remember, document, and package task guidance instead of asking one model prompt to do everything.</p>
+        <p>Eight companion projects give Kolmaf-AI safer places to test, retrieve, remember, parse, document, and package task guidance instead of asking one model prompt to do everything.</p>
       </div>
       <div class="cards">
         <article class="card span-12">
           <div class="label">How the tools tie in</div>
           <h3>Different jobs, different trust boundaries.</h3>
-          <p class="mono" style="line-height:1.9">sandbox → test away from live state &nbsp;·&nbsp; tokens → typed game data &nbsp;·&nbsp; goblin docs → find the local area &nbsp;·&nbsp; html matrix → retrieve grounded references &nbsp;·&nbsp; memory → carry structured context &nbsp;·&nbsp; skills → inject task guidance &nbsp;·&nbsp; ash-it-down → bounded docs/evidence &nbsp;·&nbsp; desktop → proposal + policy gate &nbsp;·&nbsp; KoLmafia → runtime truth</p>
+          <p class="mono" style="line-height:1.9">sandbox → test away from live state &nbsp;·&nbsp; tokens → typed game data &nbsp;·&nbsp; goblin docs → find the local area &nbsp;·&nbsp; html matrix → retrieve grounded references &nbsp;·&nbsp; memory → carry structured context &nbsp;·&nbsp; skills → inject task guidance &nbsp;·&nbsp; ash-it-down → bounded docs/evidence &nbsp;·&nbsp; kingdomsitter → parse / type / bridge ASH &nbsp;·&nbsp; desktop → proposal + policy gate &nbsp;·&nbsp; KoLmafia → runtime truth</p>
           <div class="badge-row">
             <span class="badge">evidence ≠ authority</span>
             <span class="badge">prompt ≠ permission</span>
@@ -665,6 +665,18 @@
           </div>
           <p>Use it when the hard part is “which KoLmafia concept, command, workflow, or source should ground this reasoning?”</p>
           <a class="repo-link" href="https://github.com/donCannoli-burns/kol-html-matrix">Open kol-html-matrix on GitHub ↗</a>
+        </article>
+
+        <article class="card span-12 tool-card">
+          <div class="label">Tool 08 / ASH language bridge</div>
+          <h3>kingdomsitter</h3>
+          <p>A Go-powered Tree-sitter sidecar for KoLmafia ASH. It parses ASH into a stable typed IR, exposes agent-readable analysis, and emits TypeScript aimed at the KoLmafia / Libram ecosystem without making the model the game runtime.</p>
+          <div class="tool-index">
+            <div class="mini">role<br>authority<br>surface</div>
+            <p><strong>Language / tooling bridge.</strong><br>Tree-sitter handles syntax while Go owns the IR, analysis, transpilation, and sidecar surface. KoLmafia remains authoritative for real game state and real mutations.</p>
+          </div>
+          <p>Use it when an agent needs structured ASH understanding, safer refactoring or migration, or an ASH → TypeScript / Libram path instead of treating scripts as unstructured text.</p>
+          <a class="repo-link" href="https://github.com/donCannoli-burns/kingdomsitter">Open kingdomsitter on GitHub ↗</a>
         </article>
       </div>
     </section>
