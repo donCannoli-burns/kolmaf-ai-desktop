@@ -309,17 +309,34 @@
       flex-direction: column;
     }
     .tool-card .repo-link {
-      margin-top: auto;
-      padding-top: 19px;
+      margin-top: 19px;
+      align-self: flex-start;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 11px;
+      min-height: 40px;
+      padding: 9px 12px;
+      border: 1px solid var(--black);
+      background: var(--paper-2);
+      box-shadow: 3px 3px 0 var(--black);
+      font: 700 11px var(--mono);
+      letter-spacing: .035em;
       text-transform: uppercase;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
+      text-decoration: none;
+      transition:
+        transform .2s var(--paper-ease),
+        box-shadow .2s var(--paper-ease),
+        border-color .2s ease,
+        color .2s ease,
+        background-color .2s ease;
     }
-    .tool-card .repo-link:hover { color: var(--accent-ink); }
+    .tool-card .repo-link:hover {
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--accent);
+    }
     .tool-index {
       display: grid;
       grid-template-columns: 82px 1fr;
@@ -524,11 +541,12 @@
       }
 
       .repo-link {
-        transition: color .2s ease, transform .2s var(--paper-ease);
-      }
-
-      .repo-link:hover {
-        transform: translateX(2px);
+        transition:
+          transform .2s var(--paper-ease),
+          box-shadow .2s var(--paper-ease),
+          border-color .2s ease,
+          color .2s ease,
+          background-color .2s ease;
       }
     }
 
