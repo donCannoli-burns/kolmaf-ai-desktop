@@ -1,7 +1,7 @@
 {
   "schema": "kolmaf-ai-desktop-tools/v1",
   "platform": "linux",
-  "generated_at": "2026-09-27",
+  "generated_at": "2026-09-29",
   "policy": {
     "vendor_tools": false,
     "installation_owner": "kolmafia-git",
@@ -16,7 +16,11 @@
       "reviewed_commit": "caa77c9dedde07727f0aa2a553ca24247d6c052a",
       "install_command": "git checkout donCannoli-burns/kol-html-matrix",
       "update_command": "git update kol-html-matrix",
-      "role": ["human-relay-knowledge-ui", "agent-retrieval-plane", "provenance-index"],
+      "role": [
+        "human-relay-knowledge-ui",
+        "agent-retrieval-plane",
+        "provenance-index"
+      ],
       "authority": "reference-only",
       "installed_surfaces": [
         "~/.kolmafia/data/html-matrix/FOR-AGENT.html",
@@ -34,7 +38,11 @@
       "install_command": "git checkout https://github.com/donCannoli-burns/kol-goblin-docs",
       "setup_command": "kol-goblin-docs setup",
       "update_command": "update-llm",
-      "role": ["agent-navigation-map", "runtime-documentation", "human-relay-doc-editor"],
+      "role": [
+        "agent-navigation-map",
+        "runtime-documentation",
+        "human-relay-doc-editor"
+      ],
       "authority": "navigation-context-only",
       "installed_surfaces": [
         "~/.kolmafia/data/kol-goblin-docs/README.html",
@@ -49,14 +57,52 @@
       "reviewed_commit": "ce2d07fb7cd03a47c0d5ee241ddcca5bedcdbc7d",
       "install_command": "git checkout https://github.com/donCannoli-burns/kol-ash-it-down.git",
       "update_command": "git update donCannoli-burns-kol-ash-it-down",
-      "role": ["bounded-document-bridge", "format-conversion", "gcli-correlation-evidence", "session-tail-capture", "local-audit-memory"],
+      "role": [
+        "bounded-document-bridge",
+        "format-conversion",
+        "gcli-correlation-evidence",
+        "session-tail-capture",
+        "local-audit-memory"
+      ],
       "authority": "local-document-and-evidence-only",
-      "optional_service": {"name": "kol-doc-edit", "bind": "127.0.0.1", "port": 61337},
+      "optional_service": {
+        "name": "kol-doc-edit",
+        "bind": "127.0.0.1",
+        "port": 61337
+      },
       "installed_surfaces": [
         "~/.kolmafia/git/donCannoli-burns-kol-ash-it-down/",
         "~/.kolmafia/relay/doc_edit.ash",
         "~/.kolmafia/data/doc_edit/",
         "~/.kolmafia/sessions/active_session.<player>"
+      ]
+    },
+    {
+      "id": "actor-engine",
+      "repository": "donCannoli-burns/actor-engine",
+      "branch": "main",
+      "reviewed_commit": "200f5e458d01be7cffb097f5015633712c8ff5c8",
+      "install_command": "git checkout https://github.com/donCannoli-burns/actor-engine.git main",
+      "update_command": "git update actor-engine",
+      "sidecar_install_command": "go install github.com/donCannoli-burns/actor-engine/cmd/kol-actor-engine@latest",
+      "role": [
+        "actor-control-plane",
+        "release-monitor",
+        "state-machine",
+        "kingdomsitter-observer",
+        "multi-language-client-protocol"
+      ],
+      "authority": "proposal-and-confirmed-local-staging-only",
+      "optional_service": {
+        "name": "kol-actor-engine",
+        "bind": "127.0.0.1",
+        "port": 10424
+      },
+      "installed_surfaces": [
+        "~/.kolmafia/scripts/kol_actor.ash",
+        "~/.kolmafia/data/actor-engine/runtime.json",
+        "http://127.0.0.1:10424/v1/state",
+        "http://127.0.0.1:10424/v1/release/latest"
       ]
     }
   ]

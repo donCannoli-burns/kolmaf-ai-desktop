@@ -52,6 +52,7 @@ The Linux desktop works with:
 1. `donCannoli-burns/kol-goblin-docs`
 2. `donCannoli-burns/kol-html-matrix`
 3. `donCannoli-burns/kol-ash-it-down`
+4. `donCannoli-burns/actor-engine`
 
 They are maintained separately and consumed through their installed `data/`, `relay/`, `scripts/`, session-evidence, and localhost service surfaces.
 

@@ -10,6 +10,7 @@ The model can inspect context, retrieve grounded references, reason, explain, de
 > **Current platform:** Linux  
 > **Windows / macOS:** planned, with no release date promised  
 > **Public project page:** https://doncannoli-burns.github.io/kolmaf-ai-desktop/
+> **Actor Engine page:** https://doncannoli-burns.github.io/kolmaf-ai-desktop/actor-engine.html
 
 ---
 
@@ -137,6 +138,7 @@ Kolmaf-AI is intentionally split across several small projects rather than askin
 | [kol-goblin-docs](https://github.com/donCannoli-burns/kol-goblin-docs) | Agent-first HTML5 map of the local KoLmafia tree and editable runtime documentation | Navigation/context only; documentation does not grant authority |
 | [kol-html-matrix](https://github.com/donCannoli-burns/kol-html-matrix) | Human relay UI plus machine-readable KoLmafia scripting/retrieval matrix | Reference/retrieval only; provenance helps grounding, not authorization |
 | [kingdomsitter](https://github.com/donCannoli-burns/kingdomsitter) | Go + Tree-sitter ASH language sidecar with typed IR, agent-readable analysis, and ASH → TypeScript/Libram emission | Language/tooling bridge only in v0; KoLmafia remains authoritative for live game state and mutations |
+| [actor-engine](https://github.com/donCannoli-burns/actor-engine) | Go + ASH actor/state control plane with release monitoring, state-digest confirmation, receipts, and multi-language clients | Proposal-and-confirmed local staging only in v0.1.0; no arbitrary ASH/gCLI, install/restart, or live game mutation |
 
 A shorthand view:
 
@@ -149,17 +151,19 @@ ash-it-down → bounded files + evidence
 goblin docs → navigate the local runtime
 html matrix → retrieve grounded references
 kingdomsitter → parse, type, analyze, and bridge ASH
+actor engine → concurrent state plane + proposal binding + release staging
 desktop   → workspace + proposal + policy gate
 KoLmafia  → runtime truth
 ```
 
 ### Current integration metadata
 
-The broader ecosystem above contains eight projects. The Linux integration manifest in this repository currently records the three reviewed runtime-facing companion surfaces:
+The broader ecosystem above contains nine projects. The Linux integration manifest in this repository currently records four reviewed runtime-facing companion surfaces:
 
 - `kol-goblin-docs`
 - `kol-html-matrix`
 - `kol-ash-it-down`
+- `actor-engine`
 
 See:
 

@@ -12,6 +12,7 @@ Start with `linux/README.md` for the active platform.
    - Goblin Docs = navigation/context.
    - HTML Matrix = retrieval/reference.
    - Ash-It-Down = bounded local document/evidence bridge, not a KoL mutation executor.
+   - Actor Engine = actor/state control plane; v0.1.0 authority is exact-state-confirmed local release staging only.
 6. Do not modify those working copies while implementing desktop changes unless the task explicitly targets that project.
 7. Do not print, commit, log, or expose relay credentials, daily hashes, API keys, account secrets, session cookies, or private runtime state.
 8. Keep generated logs, local databases, caches, credentials, and machine-specific runtime state out of Git.
@@ -26,5 +27,8 @@ Start with `linux/README.md` for the active platform.
 - `~/.kolmafia/data/html-matrix/hyper-data.json`
 - `~/.kolmafia/git/donCannoli-burns-kol-ash-it-down/`
 - `~/.kolmafia/data/doc_edit/`
+- `~/.kolmafia/scripts/kol_actor.ash`
+- `~/.kolmafia/data/actor-engine/runtime.json`
+- `http://127.0.0.1:10424/v1/state`
 
 See `linux/TOOLS.md` for install/update and integration details.
