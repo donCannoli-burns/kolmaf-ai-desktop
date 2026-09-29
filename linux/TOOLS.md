@@ -1,5 +1,7 @@
 # KoLmafia Companion Tools
 
+These four projects are the currently reviewed **runtime-facing Linux integrations**. They are a subset of the broader **9-project companion constellation**. For the canonical 01–09 linked discovery registry, see [`../README.md#tool-constellation`](../README.md#tool-constellation). Do not infer the full ecosystem from this narrower integration list.
+
 These projects are maintained in their own repositories and installed into KoLmafia with its Git script installer. Kolmaf-AI Desktop should discover and use their installed surfaces rather than copy their source into this repository.
 
 ## 1. kol-html-matrix
