@@ -47,7 +47,7 @@ This repository scaffold does not fabricate the working source from historical s
 
 ## KoLmafia companion tools
 
-The Linux desktop works with:
+The broader public Kolmaf-AI companion constellation contains **9 projects**; see the canonical numbered/hyperlinked registry in [`../README.md#tool-constellation`](../README.md#tool-constellation). This Linux integration layer currently works directly with **4 reviewed runtime-facing surfaces**:
 
 1. `donCannoli-burns/kol-goblin-docs`
 2. `donCannoli-burns/kol-html-matrix`
