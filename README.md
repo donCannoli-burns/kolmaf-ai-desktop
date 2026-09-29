@@ -126,19 +126,21 @@ Before testing mutating features:
 
 ## Tool constellation
 
-Kolmaf-AI is intentionally split across several small projects rather than asking one giant model prompt or one privileged bridge to do everything.
+Kolmaf-AI is intentionally split across **nine companion projects** rather than asking one giant model prompt or one privileged bridge to do everything.
 
-| Project | Role | Boundary |
-|---|---|---|
-| [kol-agent-sandbox](https://github.com/donCannoli-burns/kol-agent-sandbox) | Isolated agent testing around a pinned `loathers/kolmafia-mock` | Safe proving ground; mock failure never authorizes live fallback |
-| [tokens-of-loathing](https://github.com/donCannoli-burns/tokens-of-loathing) | Typed KoL game data through SQLite plus client/API/MCP compatibility surfaces | Queryable facts, not live execution authority |
-| [kol-agent-memory](https://github.com/donCannoli-burns/kol-agent-memory) | KoLmafia-local structured memory with SYSTEM / STATE / LOCAL / ROUTING planes | Context can survive; routing indexes do not become live-state authority |
-| [kolmafia-skills](https://github.com/donCannoli-burns/kolmafia-skills) | KoLmafia-native task-guidance / skill bus using a spaceless `/skill@...` namespace | Skill text is guidance, not permission |
-| [kol-ash-it-down](https://github.com/donCannoli-burns/kol-ash-it-down) | Bounded local document/edit/convert bridge, gCLI correlation evidence, session-tail capture, and local audit memory | Not a second KoL mutation executor |
-| [kol-goblin-docs](https://github.com/donCannoli-burns/kol-goblin-docs) | Agent-first HTML5 map of the local KoLmafia tree and editable runtime documentation | Navigation/context only; documentation does not grant authority |
-| [kol-html-matrix](https://github.com/donCannoli-burns/kol-html-matrix) | Human relay UI plus machine-readable KoLmafia scripting/retrieval matrix | Reference/retrieval only; provenance helps grounding, not authorization |
-| [kingdomsitter](https://github.com/donCannoli-burns/kingdomsitter) | Go + Tree-sitter ASH language sidecar with typed IR, agent-readable analysis, and ASH → TypeScript/Libram emission | Language/tooling bridge only in v0; KoLmafia remains authoritative for live game state and mutations |
-| [actor-engine](https://github.com/donCannoli-burns/actor-engine) | Go + ASH actor/state control plane with release monitoring, state-digest confirmation, receipts, and multi-language clients | Proposal-and-confirmed local staging only in v0.1.0; no arbitrary ASH/gCLI, install/restart, or live game mutation |
+The following **01–09 registry is the canonical discovery list** for the public companion ecosystem. Agents should start here instead of rediscovering related repositories ad hoc. The Linux runtime manifest is intentionally narrower and currently tracks only four reviewed runtime-facing integrations.
+
+| # | Project | Role | Boundary |
+|---:|---|---|---|
+| 01 | [kol-agent-sandbox](https://github.com/donCannoli-burns/kol-agent-sandbox) | Isolated agent testing around a pinned `loathers/kolmafia-mock` | Safe proving ground; mock failure never authorizes live fallback |
+| 02 | [tokens-of-loathing](https://github.com/donCannoli-burns/tokens-of-loathing) | Typed KoL game data through SQLite plus client/API/MCP compatibility surfaces | Queryable facts, not live execution authority |
+| 03 | [kol-agent-memory](https://github.com/donCannoli-burns/kol-agent-memory) | KoLmafia-local structured memory with SYSTEM / STATE / LOCAL / ROUTING planes | Context can survive; routing indexes do not become live-state authority |
+| 04 | [kolmafia-skills](https://github.com/donCannoli-burns/kolmafia-skills) | KoLmafia-native task-guidance / skill bus using a spaceless `/skill@...` namespace | Skill text is guidance, not permission |
+| 05 | [kol-ash-it-down](https://github.com/donCannoli-burns/kol-ash-it-down) | Bounded local document/edit/convert bridge, gCLI correlation evidence, session-tail capture, and local audit memory | Not a second KoL mutation executor |
+| 06 | [kol-goblin-docs](https://github.com/donCannoli-burns/kol-goblin-docs) | Agent-first HTML5 map of the local KoLmafia tree and editable runtime documentation | Navigation/context only; documentation does not grant authority |
+| 07 | [kol-html-matrix](https://github.com/donCannoli-burns/kol-html-matrix) | Human relay UI plus machine-readable KoLmafia scripting/retrieval matrix | Reference/retrieval only; provenance helps grounding, not authorization |
+| 08 | [kingdomsitter](https://github.com/donCannoli-burns/kingdomsitter) | Go + Tree-sitter ASH language sidecar with typed IR, agent-readable analysis, and ASH → TypeScript/Libram emission | Language/tooling bridge only in v0; KoLmafia remains authoritative for live game state and mutations |
+| 09 | [actor-engine](https://github.com/donCannoli-burns/actor-engine) | Go + ASH actor/state control plane with release monitoring, state-digest confirmation, receipts, and multi-language clients | Proposal-and-confirmed local staging only in v0.1.0; no arbitrary ASH/gCLI, install/restart, or live game mutation |
 
 A shorthand view:
 
@@ -158,7 +160,7 @@ KoLmafia  → runtime truth
 
 ### Current integration metadata
 
-The broader ecosystem above contains nine projects. The Linux integration manifest in this repository currently records four reviewed runtime-facing companion surfaces:
+The broader ecosystem above contains **nine companion projects (01–09)**. The Linux integration manifest in this repository currently records four reviewed runtime-facing companion surfaces:
 
 - `kol-goblin-docs`
 - `kol-html-matrix`
