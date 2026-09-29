@@ -365,6 +365,173 @@
       color: var(--muted);
     }
 
+    /* Card 09 visual language — shared page-wide */
+    :root {
+      --paper-shadow-1: 2px 2px 0 rgba(23, 25, 20, .10);
+      --paper-shadow-2: 5px 5px 0 rgba(23, 25, 20, .15);
+      --paper-shadow-3: 9px 9px 0 rgba(23, 25, 20, .13);
+      --paper-ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .topbar {
+      box-shadow: 0 3px 0 rgba(23, 25, 20, .07);
+    }
+
+    .card,
+    .stamp,
+    .flow-wrap,
+    .risk,
+    .contribute {
+      transform: translate3d(0, 0, 0);
+      transition:
+        transform .22s var(--paper-ease),
+        box-shadow .22s var(--paper-ease),
+        border-color .22s ease,
+        background-color .22s ease;
+    }
+
+    .card {
+      box-shadow: var(--paper-shadow-2);
+    }
+
+    .stamp {
+      box-shadow: 8px 8px 0 rgba(17, 19, 15, .94);
+    }
+
+    .flow-wrap {
+      box-shadow: 6px 6px 0 rgba(17, 19, 15, .92);
+    }
+
+    .risk {
+      box-shadow: 9px 9px 0 rgba(17, 19, 15, .92);
+    }
+
+    .contribute {
+      box-shadow: 7px 7px 0 rgba(17, 19, 15, .90);
+    }
+
+    .role,
+    .credit,
+    .tool-index,
+    .flow-step,
+    .contribute .paths a {
+      transform: translate3d(0, 0, 0);
+      transition:
+        transform .2s var(--paper-ease),
+        box-shadow .2s var(--paper-ease),
+        border-color .2s ease,
+        background-color .2s ease;
+    }
+
+    .role {
+      border: 1px solid rgba(23, 25, 20, .18);
+      border-top: 2px solid var(--black);
+      box-shadow: var(--paper-shadow-1);
+    }
+
+    .role.machine {
+      border-top-color: var(--accent);
+    }
+
+    .tool-index {
+      border-top: 1px solid rgba(23, 25, 20, .14);
+      border-right: 1px solid rgba(23, 25, 20, .14);
+      border-bottom: 1px solid rgba(23, 25, 20, .14);
+      box-shadow: 3px 3px 0 rgba(23, 25, 20, .09);
+    }
+
+    .flow-step {
+      box-shadow: var(--paper-shadow-1);
+    }
+
+    .credit {
+      background: rgba(238, 233, 218, .72);
+      border: 1px solid rgba(23, 25, 20, .16);
+      border-top: 2px solid var(--black);
+      padding: 15px;
+      box-shadow: var(--paper-shadow-1);
+    }
+
+    .contribute .paths a {
+      box-shadow: 2px 2px 0 rgba(23, 25, 20, .10);
+    }
+
+    .card h3,
+    .role h3,
+    .credit b,
+    .platform-mark {
+      transition: transform .2s var(--paper-ease);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--paper-shadow-3);
+        border-color: rgba(23, 25, 20, .46);
+      }
+
+      .card:hover h3 {
+        transform: translateX(2px);
+      }
+
+      .tool-card:hover .tool-index {
+        transform: translate(2px, -1px);
+        box-shadow: 4px 4px 0 rgba(23, 25, 20, .10);
+      }
+
+      .stamp:hover,
+      .flow-wrap:hover,
+      .risk:hover,
+      .contribute:hover {
+        transform: translate(-1px, -1px);
+      }
+
+      .stamp:hover {
+        box-shadow: 10px 10px 0 rgba(17, 19, 15, .92);
+      }
+
+      .flow-wrap:hover {
+        box-shadow: 8px 8px 0 rgba(17, 19, 15, .90);
+      }
+
+      .risk:hover {
+        box-shadow: 11px 11px 0 rgba(17, 19, 15, .90);
+      }
+
+      .contribute:hover {
+        box-shadow: 9px 9px 0 rgba(17, 19, 15, .88);
+      }
+
+      .role:hover,
+      .credit:hover,
+      .flow-step:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 rgba(23, 25, 20, .12);
+      }
+
+      .role:hover h3,
+      .credit:hover b {
+        transform: translateX(2px);
+      }
+
+      .platform-card:hover .platform-mark {
+        transform: translate(-1px, -1px);
+      }
+
+      .contribute .paths a:hover {
+        transform: translate(2px, -2px);
+        box-shadow: 4px 4px 0 rgba(109, 91, 208, .18);
+      }
+
+      .repo-link {
+        transition: color .2s ease, transform .2s var(--paper-ease);
+      }
+
+      .repo-link:hover {
+        transform: translateX(2px);
+      }
+    }
+
     @media (max-width: 930px) {
       header.hero, .section-head, .contribute { grid-template-columns: 1fr; }
       .stamp { max-width: 390px; }
