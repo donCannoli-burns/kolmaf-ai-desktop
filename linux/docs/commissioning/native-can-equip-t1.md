@@ -1,7 +1,9 @@
 # native.can-equip T1 — commissioning checkpoint
 
 Status: `COMMISSIONED` (content frozen; commit blocked — see below).
-Machine-readable manifest: `native-can-equip-t1-commissioning.json` (same directory).
+Machine-readable public attestation: `native-can-equip-t1-public.json` (same
+directory). This is a sanitized, repository-only record: no local paths, no
+secrets, no installed-runtime claims.
 
 ## What was built
 
@@ -73,7 +75,41 @@ Focused 69 · devtest 194 · full 609 · failures 0.
 - Generated runtime files are byte-reproducible only with
   `PROJECT_ROOT=$HOME` (`environment.PROJECT_ROOT` is dynamic).
 
-## Fresh-agent discovery
+## Two evidence layers
+
+The commissioning checkpoint is split into two independent layers. Neither
+implies the other.
+
+### Public source checkpoint (repository-only)
+
+Proven from committed public repository content only: the public attestation
+(`native-can-equip-t1-public.json`), the source capability registry, the
+canonical helper identity and hash, transport/authority coherence, intent
+routing, helper structural shape, implementation/test parseability, and
+source-snapshot provenance. It never touches installed runtime state, the
+installed relay helper, live provider health, relay reachability, or the
+receipt journal, and it never claims installed-runtime READY.
+
+Verifier: `scripts/verify-native-can-equip-checkpoint-portable` (read-only,
+safe for public CI). Prints `PORTABLE CHECKPOINT VALID` on success.
+
+### Local installation checkpoint (machine-local)
+
+Everything in the public source checkpoint, plus machine-local installation
+checks: the installed relay helper exists and hashes equal to the canonical
+helper, the local runtime projection (capabilities/bootstrap/provider-health)
+agrees with the source registry, and provider health is READY. This layer
+requires operator host state and never runs in CI.
+
+Verifier: `scripts/verify-native-can-equip-checkpoint-local` (read-only,
+LOCAL_RUNTIME). The runtime projection location is explicit via
+`--runtime-root` (or `KOLMAF_RUNTIME_ROOT`); no machine-local path is
+hardcoded. Prints `LOCAL INSTALLATION CHECKPOINT VALID` on success.
+
+## Fresh-agent discovery (local/private flow)
+
+On the operator-host standalone checkout, a fresh agent discovers the
+commissioned path from machine-local runtime state:
 
 1. Read `agentflow/runtime/lead-bootstrap.json` → `native_capabilities`.
 2. Follow `capability_registry` → `capabilities.json` entry.
@@ -81,11 +117,27 @@ Focused 69 · devtest 194 · full 609 · failures 0.
 4. Route equipability questions to `native.can-equip`; route equip
    imperatives to the T2 proposal flow and stop before execution.
 
+This flow is local-only. The public repository deliberately excludes
+`agentflow/runtime/*`, `data/capabilities/registry.json`, and other
+generated/private runtime state; the public source checkpoint proves the
+commissioning without any of it.
+
 ## Drift detection
 
-Run `scripts/verify-native-can-equip-checkpoint` (read-only). It fails on:
-helper hash drift, missing projection, registry/bootstrap/health
-disagreement, or unparsable test/manifest files.
+Two verifiers, one implementation
+(`scripts/verify_native_can_equip_checkpoint.py`), two profiles:
+
+- **Portable** (`--mode portable`) fails on helper/source/attestation drift:
+  public attestation missing or altered, canonical helper missing or
+  hash-drifted, capability ID/authority/transport/caller-controls altered in
+  the source registry, source-snapshot provenance disagreement, helper
+  structural-shape violation, or unparsable implementation/test files.
+- **Local** (`--mode local`) fails on all portable drift plus
+  installed-helper/runtime-projection/provider-health/readiness drift:
+  installed helper missing or hash-drifted, runtime projection
+  disagreement, provider health not READY, or local bootstrap not READY.
+
+Both are read-only. Neither performs network I/O, proposals, or gameplay.
 
 ## What remains prohibited
 

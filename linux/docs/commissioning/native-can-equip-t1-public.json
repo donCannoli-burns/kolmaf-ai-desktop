@@ -1,0 +1,29 @@
+{
+  "schema": "kolmaf-public-commissioning-attestation/v1",
+  "capability": "native.can-equip",
+  "commissioning_status": "COMMISSIONED",
+  "authority": "OBSERVATION_ONLY",
+  "mutation_scope": "none",
+  "native_owner": "KoLmafia",
+  "adapter_owner": "Don",
+  "transport": {
+    "type": "fixed-relay-get",
+    "method": "GET",
+    "caller_controls_code": false,
+    "caller_controls_destination": false,
+    "caller_controls_function": false
+  },
+  "canonical_helper": {
+    "path": "src/kolmafa/devtest/relay/don_native_can_equip.ash",
+    "sha256": "666c8abd92935cabd7d9099b45e2d92814e9dced0e2540ee6d97614d77648944"
+  },
+  "source_snapshot": {
+    "local_source_commit": "a0299b8fbd5f41aaf8a2e1c09da47b109ba6c744"
+  },
+  "scope": {
+    "repository_only": true,
+    "installed_runtime_verified": false,
+    "provider_ready_verified": false,
+    "live_freshness_verified": false
+  }
+}

@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Portable checkpoint verifier for the commissioned native.can-equip path.
-# Repository-only: safe for CI. Never requires ~/.kolmafia, the installed
-# relay helper, live provider health, relay reachability, the receipt
-# journal, or a machine-local interpreter. Prints PORTABLE CHECKPOINT VALID
-# on success; never claims installed-runtime READY.
+# Repository-only: safe for public CI. Proves the public attestation, source
+# registry, canonical helper identity/hash, transport/authority coherence,
+# intent routing, helper shape, parseability, and source provenance.
+# Never requires machine-local runtime state, the installed relay helper,
+# live provider health, relay reachability, or the receipt journal.
+# Prints PORTABLE CHECKPOINT VALID on success; never claims installed-runtime
+# READY. For machine-local checks use verify-native-can-equip-checkpoint-local.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"

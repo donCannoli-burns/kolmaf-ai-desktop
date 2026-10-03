@@ -2,13 +2,17 @@
 # Local installation checkpoint verifier for native.can-equip (LOCAL_RUNTIME).
 # Runs every portable check plus machine-local installation checks:
 # installed relay helper exists and hashes equal to the canonical helper,
-# local provider health READY, local bootstrap freshness. Requires the
-# operator host (~/.kolmafia installed helper). Never run in CI.
-# Prints LOCAL INSTALLATION CHECKPOINT VALID on success.
+# local runtime projection (capabilities/bootstrap/provider-health) agrees
+# with the source registry, and provider health is READY. Requires the
+# operator host (installed ~/.kolmafia relay helper + runtime projection).
+# Never run in CI. Prints LOCAL INSTALLATION CHECKPOINT VALID on success.
+#
+# The runtime projection location is explicit: pass --runtime-root, or set
+# KOLMAF_RUNTIME_ROOT. No machine-local path is hardcoded.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
 exec "${PYTHON:-python3}" "$SCRIPT_DIR/verify_native_can_equip_checkpoint.py" \
-  --mode local --project-root "$PROJECT_ROOT"
+  --mode local --project-root "$PROJECT_ROOT" "$@"
