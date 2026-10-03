@@ -18,11 +18,16 @@
 # Test profile (portable offline only):
 #   - DevTest safety suite: linux/tests/devtest
 #   - Portable offline test gate: linux/tests/ with marker deselection, minus
-#     two pre-existing whole-file exclusions:
+#     pre-existing whole-file exclusions:
 #       linux/tests/adversarial_envelope/test_phase4_lifecycle_contracts.py
 #         = ACCIDENTALLY_PATH_COUPLED (not yet repaired)
 #       linux/tests/adversarial_envelope/test_phase6_evaluation.py
 #         = LEGACY_TEST
+#       linux/tests/adversarial_envelope/test_dataset_projection_contract.py
+#         = REQUIRES_LOCAL_ONLY_DATA (data/eval/ not in public repo)
+#     And one test deselection:
+#       linux/tests/test_eval.py::test_original_artifact_sha256
+#         = REQUIRES_LOCAL_ONLY_DATA (data/eval/ checksum verification)
 # The portable checkpoint verifier
 # (linux/scripts/verify-native-can-equip-checkpoint-portable) runs here; it is
 # repository-only and never claims installed-runtime READY. The local
