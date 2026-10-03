@@ -95,8 +95,8 @@ jobs:
             --ignore=linux/tests/adversarial_envelope/test_phase4_lifecycle_contracts.py \
             --ignore=linux/tests/adversarial_envelope/test_phase6_evaluation.py \
             --ignore=linux/tests/adversarial_envelope/test_dataset_projection_contract.py \
-            --deselect=linux/tests/test_eval.py::test_original_artifact_sha256 \
-            -m "not external_integration and not local_runtime and not legacy"
+            -m "not external_integration and not local_runtime and not legacy" \
+            -k "not test_original_artifact_sha256"
       - name: Portable native.can-equip checkpoint verifier
         run: PYTHON=python linux/scripts/verify-native-can-equip-checkpoint-portable
       - name: Prove live writer selection unavailable
