@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kolmaf-registry/v1",
+  "title": "Kolmaf compiled provider registry",
+  "description": "Deterministic generated projection of all validated provider manifests. No timestamps, no observations beyond target existence. Regenerate with integration/linkbus/compile_registry.py.",
+  "type": "object",
+  "required": ["schema", "uri_scheme", "providers", "identities", "counts"],
+  "properties": {
+    "schema": {
+      "const": "kolmaf-registry/v1"
+    },
+    "uri_scheme": {
+      "const": "kolmaf"
+    },
+    "providers": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "uri", "authority", "identities", "relationships"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string",
+            "pattern": "^kolmaf://"
+          },
+          "authority": {
+            "type": "string"
+          },
+          "identities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["uri", "path", "required", "exists"]
+            }
+          },
+          "relationships": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "identities": {
+      "type": "object",
+      "patternProperties": {
+        "^kolmaf://": {
+          "type": "object",
+          "required": ["provider", "path", "required", "exists"]
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["providers", "identities"],
+      "properties": {
+        "providers": {
+          "type": "integer"
+        },
+        "identities": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

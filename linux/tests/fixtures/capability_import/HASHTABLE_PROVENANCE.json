@@ -1,0 +1,28 @@
+{
+  "kolmafia_capability.hashtable.json": {
+    "sha256": "2237275bd97c4def503f2aaad51e68adabee3b4502848b74617101ed7992a600",
+    "entries": 4,
+    "source": "fixture/kolmafia_capability_index.csv",
+    "stats": {
+      "capacity": 16,
+      "size": 4,
+      "load_factor": 0.25,
+      "max_psl": 1,
+      "avg_psl": 0.25,
+      "empty_slots": 12
+    }
+  },
+  "agent_resource.hashtable.json": {
+    "sha256": "ec9fb45933e8ae794119e50be1aea8284fd8e3af7fc16503bfc8a37b0d947387",
+    "entries": 2,
+    "source": "fixture/kol_agent_index.json",
+    "stats": {
+      "capacity": 8,
+      "size": 2,
+      "load_factor": 0.25,
+      "max_psl": 0,
+      "avg_psl": 0.0,
+      "empty_slots": 6
+    }
+  }
+}

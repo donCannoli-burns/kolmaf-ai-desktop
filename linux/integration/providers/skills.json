@@ -1,0 +1,53 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kolmafia-skills",
+  "name": "KoLmafia Skills",
+  "uri": "kolmaf://provider/skills",
+  "description": "Agent skill bridge between KoLmafia scripts and OpenCode skills. Guidance surfaces only.",
+  "authority": "GUIDANCE_ONLY",
+  "freshness": "VERSIONED",
+  "capabilities": ["agent-skills", "script-bridge", "guidance"],
+  "human": {
+    "entry": "scripts/skillbooks.js",
+    "note": "installed skillbooks relay helper"
+  },
+  "agent": {
+    "bridge": "scripts/agent_skill_bridge.py",
+    "relay": "scripts/agent_skill_relay.js"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://skills/bridge",
+      "path": "$HOME/.kolmafia/scripts/agent_skill_bridge.py",
+      "required": true,
+      "kind": "file",
+      "note": "Python skill bridge"
+    },
+    {
+      "uri": "kolmaf://skills/relay",
+      "path": "$HOME/.kolmafia/scripts/agent_skill_relay.js",
+      "required": true,
+      "kind": "file",
+      "note": "relay-side skill helper"
+    },
+    {
+      "uri": "kolmaf://skills/manifest",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kolmafia-skills-main/manifest.json",
+      "required": false,
+      "kind": "file",
+      "note": "upstream manifest; provenance only"
+    },
+    {
+      "uri": "kolmaf://skills/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kolmafia-skills-main",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only"
+    }
+  ],
+  "relationships": [],
+  "provenance": {
+    "evidence": "STRONGLY_SUPPORTED",
+    "note": "Slice-1: git checkout plus installed bridge/relay inspected; no verified cross-provider edge yet, so no relationships declared"
+  }
+}

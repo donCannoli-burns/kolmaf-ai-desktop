@@ -1,0 +1,72 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kol-goblin-docs",
+  "name": "KoL Goblin Docs",
+  "uri": "kolmaf://provider/goblin",
+  "description": "Navigation-only KoLmafia tree documentation with stable branch indexes. Documents; never executes.",
+  "authority": "NAVIGATION_ONLY",
+  "freshness": "VERSIONED",
+  "capabilities": ["documentation", "tree-navigation", "branch-indexes"],
+  "human": {
+    "entry": "relay/relay_kol-goblin-docs.ash"
+  },
+  "agent": {
+    "runtime": "data/kol-goblin-docs/runtime.tsv",
+    "matrix": "data/kol-goblin-docs/matrix.tsv"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://goblin/relay",
+      "path": "$HOME/.kolmafia/relay/relay_kol-goblin-docs.ash",
+      "required": true,
+      "kind": "file",
+      "note": "human relay surface"
+    },
+    {
+      "uri": "kolmaf://goblin/runtime",
+      "path": "$HOME/.kolmafia/data/kol-goblin-docs/runtime.tsv",
+      "required": true,
+      "kind": "file",
+      "note": "runtime surface table; cites html-matrix agent plane"
+    },
+    {
+      "uri": "kolmaf://goblin/matrix",
+      "path": "$HOME/.kolmafia/data/kol-goblin-docs/matrix.tsv",
+      "required": true,
+      "kind": "file",
+      "note": "matrix surface table"
+    },
+    {
+      "uri": "kolmaf://goblin/branch/relay",
+      "path": "$HOME/.kolmafia/data/kol-goblin-docs/branches/relay",
+      "required": true,
+      "kind": "dir",
+      "note": "relay branch index"
+    },
+    {
+      "uri": "kolmaf://goblin/branch/scripts",
+      "path": "$HOME/.kolmafia/data/kol-goblin-docs/branches/scripts",
+      "required": true,
+      "kind": "dir",
+      "note": "scripts branch index"
+    },
+    {
+      "uri": "kolmaf://goblin/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-goblin-docs",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "DOCUMENTS",
+      "target": "kolmaf://provider/matrix",
+      "note": "goblin runtime.tsv cites the html-matrix agent plane and git path"
+    }
+  ],
+  "provenance": {
+    "evidence": "PROVEN",
+    "note": "Slice-1: git checkout, runtime.tsv, matrix.tsv, branch indexes, relay all inspected"
+  }
+}

@@ -1,36 +1,31 @@
-# Local secrets / credentials
-.env
-.env.*
-!.env.example
-*.key
-*.pem
-daily-hash*
-service.token
-
-# Runtime state / evidence
-sessions/
-logs/
-state/
-runtime/
-*.sqlite
-*.sqlite3
-*.db
-*.db-journal
-*.db-wal
-*.db-shm
-
-# Python / test / build
+.venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
-.mypy_cache/
-.venv/
-venv/
-build/
-dist/
-*.egg-info/
+data/*.db
+data/*.sqlite
+data/runtime/
+logs/*
+!logs/.gitignore
 
-# Node / web build cache
-node_modules/
-.npm/
+# ─── Secrets ──────────────────────────────────────────────
+.env
+*.env
+!*.env.example
+data/secrets/
+**/daily-hash
+**/secret-access.log
+
+# ─── Portable runtime local-only state ────────────────────
+# (agentflow/runtime/*.json compile outputs ARE tracked as checkpoint state)
+agentflow/runtime/.receipt_secret
+*.token
+*.key
+agentflow/context/
+agentflow/staging/
+agentflow/proposals/
+agentflow/feedback.json
+agentflow/install.json
+agentflow/delegations.ndjson
+agentflow/smoke-report.json

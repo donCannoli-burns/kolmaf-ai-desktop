@@ -1,0 +1,80 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kol-ash-it-down",
+  "name": "KoL Ash-It-Down",
+  "uri": "kolmaf://provider/ash-it-down",
+  "description": "Bounded courier: copy, transform, hash, stage, receipt. Slice 2 registers the exchange surfaces only; materialization authority is deferred to a later slice.",
+  "authority": "REFERENCE_ONLY",
+  "freshness": "SESSION",
+  "capabilities": ["artifact-staging", "exchange", "receipts"],
+  "human": {
+    "entry": "relay/doc_edit.ash",
+    "ui": "data/doc_edit/ui.html"
+  },
+  "agent": {
+    "inbox": "data/doc_edit/inbox/",
+    "outbox": "data/doc_edit/outbox/"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://ash/relay",
+      "path": "$HOME/.kolmafia/relay/doc_edit.ash",
+      "required": true,
+      "kind": "file",
+      "note": "human relay surface"
+    },
+    {
+      "uri": "kolmaf://ash/cli",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-ash-it-down/scripts/doc_edit_cli.ash",
+      "required": true,
+      "kind": "file",
+      "note": "CLI surface in source checkout"
+    },
+    {
+      "uri": "kolmaf://ash/common",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-ash-it-down/scripts/doc_edit_common.ash",
+      "required": true,
+      "kind": "file",
+      "note": "shared logic in source checkout"
+    },
+    {
+      "uri": "kolmaf://ash/login",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-ash-it-down/scripts/doc_edit_login.ash",
+      "required": true,
+      "kind": "file",
+      "note": "login helper in source checkout"
+    },
+    {
+      "uri": "kolmaf://ash/inbox",
+      "path": "$HOME/.kolmafia/data/doc_edit/inbox",
+      "required": true,
+      "kind": "dir",
+      "note": "exchange inbox; empty at Slice-1 inventory"
+    },
+    {
+      "uri": "kolmaf://ash/outbox",
+      "path": "$HOME/.kolmafia/data/doc_edit/outbox",
+      "required": true,
+      "kind": "dir",
+      "note": "exchange outbox; empty at Slice-1 inventory"
+    },
+    {
+      "uri": "kolmaf://ash/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-ash-it-down",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "RELATED_TO",
+      "target": "kolmaf://provider/memory",
+      "note": "installed tree contains data/doc_edit/llm-session/state/memory/logs/doc/"
+    }
+  ],
+  "provenance": {
+    "evidence": "STRONGLY_SUPPORTED",
+    "note": "Slice-1: git checkout, doc_edit ash surfaces, inbox/outbox dirs inspected"
+  }
+}

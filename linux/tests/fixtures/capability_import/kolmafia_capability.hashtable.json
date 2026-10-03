@@ -1,0 +1,55 @@
+{
+  "capacity": 16,
+  "size": 4,
+  "hash": "fnv1a_64",
+  "slots": [
+    null,
+    {
+      "key": "ash.fixture.game_state_probe.noargs",
+      "value": {
+        "entry_id": "ash.fixture.game_state_probe.noargs",
+        "name": "fixture game state probe",
+        "candidate_risk": "read_only"
+      },
+      "psl": 0
+    },
+    null,
+    {
+      "key": "ash.fixture.local_computation.noargs",
+      "value": {
+        "entry_id": "ash.fixture.local_computation.noargs",
+        "name": "fixture local computation",
+        "candidate_risk": "read_only"
+      },
+      "psl": 0
+    },
+    {
+      "key": "ash.fixture.recursive_candidate.string",
+      "value": {
+        "entry_id": "ash.fixture.recursive_candidate.string",
+        "name": "fixture recursive candidate",
+        "candidate_risk": "unresolved"
+      },
+      "psl": 1
+    },
+    null,
+    null,
+    null,
+    {
+      "key": "ash.fixture.mutating_candidate.string",
+      "value": {
+        "entry_id": "ash.fixture.mutating_candidate.string",
+        "name": "fixture mutating candidate",
+        "candidate_risk": "mutating_confirmation"
+      },
+      "psl": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+}

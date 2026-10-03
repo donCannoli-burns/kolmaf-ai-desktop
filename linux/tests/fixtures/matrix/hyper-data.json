@@ -1,0 +1,48 @@
+{
+  "schema": "kol-html-matrix-hyper-data-fixture/v1",
+  "note": "SYNTHETIC minimal Matrix corpus for portable contract tests. Hand-authored; NOT copied or sanitized from the installed 665-node corpus. Real-corpus counts are asserted only by local_runtime tests against the installed corpus.",
+  "nodes": [
+    {
+      "id": "fx:data-of-loathing",
+      "name": "data-of-loathing fixture node",
+      "pointer": "mem://fixture/0000#aa11",
+      "tags": ["data", "loathing"]
+    },
+    {
+      "id": "fx:data-loathers-service",
+      "name": "data.loathers.net fixture mirror",
+      "pointer": "mem://fixture/0001#bb22",
+      "tags": ["data", "service"]
+    },
+    {
+      "id": "fx:sublime-settings",
+      "name": "sublime editor settings",
+      "pointer": "mem://fixture/0002#cc33",
+      "tags": ["editor", "sublime"]
+    },
+    {
+      "id": "fx:memory-index",
+      "name": "memory retrieval index",
+      "pointer": "mem://fixture/0003#dd44",
+      "tags": ["memory", "retrieval"]
+    },
+    {
+      "id": "fx:sandbox-harness",
+      "name": "sandbox test harness",
+      "pointer": "mem://fixture/0004#ee55",
+      "tags": ["sandbox"]
+    },
+    {
+      "id": "fx:item-notes",
+      "name": "notes about item/153",
+      "pointer": "mem://fixture/0005#ff66",
+      "tags": ["item"]
+    }
+  ],
+  "workflows": [
+    {"id": "wf-fixture-1", "name": "fixture workflow"}
+  ],
+  "usecases": [
+    {"id": "uc-fixture-1", "name": "fixture usecase"}
+  ]
+}

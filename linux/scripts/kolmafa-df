@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+export KOLMAFA_TRANSPORT="${KOLMAFA_TRANSPORT:-docker-free}"
+export KOLMAFA_KOLMAFIA_HOME="${KOLMAFA_KOLMAFIA_HOME:-$HOME/.kolmafia}"
+export KOLMAFA_PLAYER_NAME="${KOLMAFA_PLAYER_NAME:-test_player}"
+export PYTHONPATH="$PROJECT_ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+
+case "${1:-}" in
+    observe|listen|respond|loop)
+        if [[ "$#" -eq 1 ]]; then
+            set -- "$1" "$KOLMAFA_PLAYER_NAME"
+        fi
+        ;;
+esac
+
+exec python3 -m kolmafa.cli "$@"

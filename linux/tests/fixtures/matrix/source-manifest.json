@@ -1,0 +1,12 @@
+{
+  "schema": "kol-html-matrix-install-manifest-fixture/v1",
+  "note": "SYNTHETIC fixture manifest for portable contract tests. sha256 values are placeholders that only exercise pin-shape validation; they pin nothing.",
+  "matrix": {
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "agent_plane": {
+    "hyper_data": {
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  }
+}

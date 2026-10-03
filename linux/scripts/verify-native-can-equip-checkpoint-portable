@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Portable checkpoint verifier for the commissioned native.can-equip path.
+# Repository-only: safe for CI. Never requires ~/.kolmafia, the installed
+# relay helper, live provider health, relay reachability, the receipt
+# journal, or a machine-local interpreter. Prints PORTABLE CHECKPOINT VALID
+# on success; never claims installed-runtime READY.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+exec "${PYTHON:-python3}" "$SCRIPT_DIR/verify_native_can_equip_checkpoint.py" \
+  --mode portable --project-root "$PROJECT_ROOT"

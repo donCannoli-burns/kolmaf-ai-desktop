@@ -1,0 +1,72 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kol-html-matrix",
+  "name": "KoL HTML Matrix",
+  "uri": "kolmaf://provider/matrix",
+  "description": "Visible root: 665-node hyper-data corpus with agent master index. Existing mem:// provenance stays intact; kolmaf:// overlay arrives in a later slice.",
+  "authority": "NAVIGATION_ONLY",
+  "freshness": "VERSIONED",
+  "capabilities": ["rendering", "navigation", "agent-index", "search-projection"],
+  "human": {
+    "entry": "relay/html-matrix/index.html",
+    "relay": "relay/relay_html_matrix.ash"
+  },
+  "agent": {
+    "index": "data/html-matrix/agent-master-index.json",
+    "hyper_data": "data/html-matrix/hyper-data.json",
+    "manifest": "data/html-matrix/source-manifest.json"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://matrix/nodes",
+      "path": "$HOME/.kolmafia/data/html-matrix/hyper-data.json",
+      "required": true,
+      "kind": "file",
+      "note": "665 nodes, 13 workflows, 29 usecases verified"
+    },
+    {
+      "uri": "kolmaf://matrix/index",
+      "path": "$HOME/.kolmafia/data/html-matrix/agent-master-index.json",
+      "required": true,
+      "kind": "file",
+      "note": "agent plane index"
+    },
+    {
+      "uri": "kolmaf://matrix/manifest",
+      "path": "$HOME/.kolmafia/data/html-matrix/source-manifest.json",
+      "required": true,
+      "kind": "file",
+      "note": "kol-html-matrix-install-manifest/v1 with sha256 pins"
+    },
+    {
+      "uri": "kolmaf://matrix/relay",
+      "path": "$HOME/.kolmafia/relay/relay_html_matrix.ash",
+      "required": true,
+      "kind": "file",
+      "note": "human relay surface"
+    },
+    {
+      "uri": "kolmaf://matrix/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-html-matrix",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "CAN_RENDER",
+      "target": "kolmaf://provider/goblin",
+      "note": "matrix relay renders provider documentation branches"
+    },
+    {
+      "type": "REFERENCES",
+      "target": "kolmaf://provider/memory",
+      "note": "matrix agent plane is indexed by memory retrieval metadata"
+    }
+  ],
+  "provenance": {
+    "evidence": "PROVEN",
+    "note": "Slice-1: git checkout, agent plane files, relay, node counts all inspected"
+  }
+}

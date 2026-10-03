@@ -1,0 +1,5 @@
+{
+  "schema": "kol-html-matrix-agent-index-fixture/v1",
+  "note": "SYNTHETIC fixture agent index for portable contract tests. Not copied from the installed corpus.",
+  "agents": []
+}

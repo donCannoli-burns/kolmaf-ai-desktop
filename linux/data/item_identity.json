@@ -1,0 +1,16 @@
+{
+  "schema": "kolmafa-item-identity-v1",
+  "source": {
+    "kind": "kolmafia-canonical-item-data",
+    "path": "$HOME/repos/build-dev/build-dev-ai-kol/ai-kol/mafia_playground/repos/kolmafia/src/data/items.txt",
+    "relative_path": "ai-kol/mafia_playground/repos/kolmafia/src/data/items.txt",
+    "sha256": "5436e77e67a1e149004f797ba898c8232ae3cb6f6b3010537592675859276dbd",
+    "kolmafia_revision": "0ef71f1fdc5cf4f11e7ae4c81835a6f6dbf0a757",
+    "items_version": 1,
+    "file_size": 866742
+  },
+  "items": {
+    "153": "Ancient Saucehelm",
+    "5054": "intriguing puzzle box"
+  }
+}

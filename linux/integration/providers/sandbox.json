@@ -1,0 +1,66 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kol-agent-sandbox",
+  "name": "KoL Agent Sandbox",
+  "uri": "kolmaf://provider/sandbox",
+  "description": "Isolated KoLmafia test branches with mock verification. Live tree is never test-written.",
+  "authority": "TEST_ONLY",
+  "freshness": "SESSION",
+  "capabilities": ["test-execution", "mock-verification", "sandbox-evidence"],
+  "human": {
+    "entry": "scripts/kol-agent-sandbox.ash",
+    "gcli_install": "call kol-agent-sandbox.ash install main"
+  },
+  "agent": {
+    "contract": "data/kol-agent-sandbox/agent-sandbox-contract.json",
+    "index": "data/kol-agent-sandbox/index.html5"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://sandbox/contract",
+      "path": "$HOME/.kolmafia/data/kol-agent-sandbox/agent-sandbox-contract.json",
+      "required": true,
+      "kind": "file",
+      "note": "kolmafia-agent-sandbox/v1 contract; mock verified via tokens-compat"
+    },
+    {
+      "uri": "kolmaf://sandbox/main",
+      "path": "$HOME/.kolmafia/data/kol-agent-sandbox/index.html5",
+      "required": true,
+      "kind": "file",
+      "note": "sandbox surface index"
+    },
+    {
+      "uri": "kolmaf://sandbox/entrypoint",
+      "path": "$HOME/.kolmafia/scripts/kol-agent-sandbox.ash",
+      "required": true,
+      "kind": "file",
+      "note": "KoLmafia entrypoint"
+    },
+    {
+      "uri": "kolmaf://sandbox/bootstrap",
+      "path": "$HOME/.kolmafia/scripts/kol-agent-sandbox/bootstrap-agent-sandbox.sh",
+      "required": false,
+      "kind": "file",
+      "note": "bootstrap helper; install provenance"
+    },
+    {
+      "uri": "kolmaf://sandbox/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-agent-sandbox",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only, never a runtime dependency"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "CAN_VERIFY",
+      "target": "kolmaf://provider/tokens",
+      "note": "contract mock_compatibility_provider is tokens-of-loathing SQLite"
+    }
+  ],
+  "provenance": {
+    "evidence": "PROVEN",
+    "note": "Slice-1: git checkout, data surfaces, scripts entrypoint all inspected"
+  }
+}

@@ -1,0 +1,152 @@
+# GitHub Actions CI - read-only portable offline safety gate for Linux runtime.
+#
+# Scope: push / pull_request targeting main only. GitHub-hosted runner,
+# read-only token, no repository or environment secrets, no dependency caching,
+# no artifact upload, and no live KoL / KoLmafia contact. Every `uses:` is
+# pinned to a full 40-character immutable commit SHA.
+#
+# Test taxonomy (pytest markers registered in pyproject.toml):
+#   PORTABLE_UNIT / PORTABLE_CONTRACT: unmarked tests; repository-contained
+#     inputs only (committed source, synthetic fixtures under
+#     tests/fixtures/, tmp_path). These run here.
+#   external_integration: real external provider constellation or sibling
+#     workspaces. Deselected here.
+#   local_runtime: machine-local installed state (generated data/runtime
+#     registry, installed ~/.kolmafia targets). Deselected here.
+#   legacy: superseded historical tests. Deselected here.
+#
+# Test profile (portable offline only):
+#   - DevTest safety suite: linux/tests/devtest
+#   - Portable offline test gate: linux/tests/ with marker deselection, minus
+#     two pre-existing whole-file exclusions:
+#       linux/tests/adversarial_envelope/test_phase4_lifecycle_contracts.py
+#         = ACCIDENTALLY_PATH_COUPLED (not yet repaired)
+#       linux/tests/adversarial_envelope/test_phase6_evaluation.py
+#         = LEGACY_TEST
+# The portable checkpoint verifier
+# (linux/scripts/verify-native-can-equip-checkpoint-portable) runs here; it is
+# repository-only and never claims installed-runtime READY. The local
+# verifier (linux/scripts/verify-native-can-equip-checkpoint-local) is
+# LOCAL_RUNTIME and never runs in GitHub: it requires the installed
+# ~/.kolmafia relay helper and local provider health.
+#
+# Known conditional skips (honest, recorded, not auto-failed):
+#   linux/tests/devtest/test_capability_registry.py::test_real_bundle_registry_matches_don_advertisement
+#     skips when the operator-host portable bundle registry
+#     (~/.local/share/kolmaf-ai/agent-bundle) is absent.
+#     Classification: LOCAL_RUNTIME.
+#   linux/tests/devtest/test_capability_registry.py::test_real_helper_health_is_ready
+#     skips when the installed ~/.kolmafia relay helper is absent.
+#     Classification: LOCAL_RUNTIME.
+#
+# Live boundary: KOLMAFA_LIVE_RELAY_ENABLED is forced to the safest value
+# ("false") and no relay credential is provided, so ActionBroker._select_writer
+# can only return DryRunGcliWriter. A dedicated step asserts this.
+
+name: linux-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'linux/**'
+      - '.github/workflows/linux-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'linux/**'
+      - '.github/workflows/linux-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  portable-offline-gate:
+    name: portable offline safety gate
+    runs-on: ubuntu-latest
+    env:
+      # Safest disabled values: no live writer can be auto-selected and no
+      # relay network probe is attempted by readiness/inspection.
+      KOLMAFA_TRANSPORT: docker-free
+      KOLMAFA_LIVE_RELAY_ENABLED: "false"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # actions/checkout v5.0.0
+      - name: Set up Python 3.13
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # actions/setup-python v6.3.0
+        with:
+          python-version: "3.13"
+      - name: Install test dependencies
+        run: python -m pip install "pytest>=8.0"
+      - name: Compile and import check
+        run: |
+          python -m compileall -q linux/src linux/tests
+          PYTHONPATH=linux/src python -c "import kolmafa, kolmafa.devtest.runtime, kolmafa.devtest.action_broker, kolmafa.devtest.relay_writer; print('import ok')"
+      - name: DevTest safety suite
+        run: python -m pytest linux/tests/devtest -q
+      - name: Portable offline test gate
+        run: |
+          python -m pytest linux/tests -q \
+            --ignore=linux/tests/adversarial_envelope/test_phase4_lifecycle_contracts.py \
+            --ignore=linux/tests/adversarial_envelope/test_phase6_evaluation.py \
+            -m "not external_integration and not local_runtime and not legacy"
+      - name: Portable native.can-equip checkpoint verifier
+        run: PYTHON=python linux/scripts/verify-native-can-equip-checkpoint-portable
+      - name: Prove live writer selection unavailable
+        run: |
+          PYTHONPATH=linux/src python - <<'PY'
+          from kolmafa.bridge import DryRunGcliWriter
+          from kolmafa.devtest.action_broker import _select_writer
+          writer = _select_writer(None)
+          assert isinstance(writer, DryRunGcliWriter), type(writer).__name__
+          print("live writer selection unavailable:", type(writer).__name__)
+          PY
+      - name: Secret-pattern scan (committed content only)
+        run: |
+          python - <<'PY'
+          import re
+          import subprocess
+          import sys
+
+          patterns = {
+              "github_token": re.compile(r"gh[oprsu]_[A-Za-z0-9]{20,}"),
+              "github_pat": re.compile(r"github_pat_[A-Za-z0-9_]{20,}"),
+              "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY-----"),
+              "aws_access_key": re.compile(r"AKIA[0-9A-Z]{16}"),
+          }
+          src_assignment = re.compile(
+              r"(?i)\b(?:password|passwd|pwd)\b\s*[:=]\s*[\"'][^\"']{12,}[\"']"
+          )
+          secret_filenames = {"receipt_secret", "daily-hash", "secret-access.log"}
+
+          tracked = [
+              p.decode("utf-8", "replace")
+              for p in subprocess.check_output(["git", "ls-files", "linux/", "-z"]).split(b"\0")
+              if p
+          ]
+
+          findings = set()
+          for path in tracked:
+              base = path.rsplit("/", 1)[-1]
+              if base in secret_filenames or ".receipt_secret" in path:
+                  findings.add((path, "secret_filename"))
+                  continue
+              try:
+                  text = open(path, "rb").read().decode("utf-8", "replace")
+              except OSError:
+                  continue
+              for label, rx in patterns.items():
+                  if rx.search(text):
+                      findings.add((path, label))
+              # Credential assignments are only high-signal in production
+              # source; test fixtures intentionally contain fake credentials.
+              if path.startswith("linux/src/") and src_assignment.search(text):
+                  findings.add((path, "credential_assignment"))
+
+          if findings:
+              for path, label in sorted(findings):
+                  print(f"SECRET-PATTERN HIT {path}: {label}")
+              print(f"secret scan FAILED: {len(findings)} finding(s)")
+              sys.exit(1)
+          print(f"secret scan clean: {len(tracked)} tracked files, 0 findings")
+          PY

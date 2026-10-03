@@ -1,0 +1,31 @@
+{
+  "capacity": 8,
+  "size": 2,
+  "hash": "fnv1a_64",
+  "slots": [
+    {
+      "key": "fixture.resource.beta",
+      "value": {
+        "category": "Fixture Resources",
+        "resource_count": 5,
+        "source_doc": "fixture"
+      },
+      "psl": 0
+    },
+    null,
+    {
+      "key": "fixture.resource.alpha",
+      "value": {
+        "category": "Fixture Resources",
+        "resource_count": 3,
+        "source_doc": "fixture"
+      },
+      "psl": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
+}

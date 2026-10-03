@@ -1,0 +1,72 @@
+{
+  "schema": "kolmaf-provider/v1",
+  "id": "kol-agent-memory",
+  "name": "KoL Agent Memory",
+  "uri": "kolmaf://provider/memory",
+  "description": "Semantic nervous system: identity, relationship, freshness, retrieval metadata. Points at documents; owns no second editable copy.",
+  "authority": "REFERENCE_ONLY",
+  "freshness": "VERSIONED",
+  "capabilities": ["semantic-index", "retrieval-metadata", "relationship-graph"],
+  "human": {
+    "entry": "relay/kol-agent-memory-relay.ash"
+  },
+  "agent": {
+    "runtime": "data/kol-agent-memory/runtime.tsv",
+    "templates": "data/kol-agent-memory/templates/"
+  },
+  "targets": [
+    {
+      "uri": "kolmaf://memory/runtime",
+      "path": "$HOME/.kolmafia/data/kol-agent-memory/runtime.tsv",
+      "required": true,
+      "kind": "file",
+      "note": "runtime surface table"
+    },
+    {
+      "uri": "kolmaf://memory/templates",
+      "path": "$HOME/.kolmafia/data/kol-agent-memory/templates",
+      "required": true,
+      "kind": "dir",
+      "note": "master.html5, plane.html5, nano-sec-state-clock.html"
+    },
+    {
+      "uri": "kolmaf://memory/relay",
+      "path": "$HOME/.kolmafia/relay/kol-agent-memory-relay.ash",
+      "required": true,
+      "kind": "file",
+      "note": "human relay surface"
+    },
+    {
+      "uri": "kolmaf://memory/entrypoint",
+      "path": "$HOME/.kolmafia/scripts/kol-agent-memory.ash",
+      "required": true,
+      "kind": "file",
+      "note": "KoLmafia entrypoint"
+    },
+    {
+      "uri": "kolmaf://memory/bootstrap",
+      "path": "$HOME/.kolmafia/scripts/kol-agent-memory/bootstrap_exact_tree.py",
+      "required": true,
+      "kind": "file",
+      "note": "exact-tree installer"
+    },
+    {
+      "uri": "kolmaf://memory/source",
+      "path": "$HOME/.kolmafia/git/donCannoli-burns-kol-agent-memory",
+      "required": false,
+      "kind": "dir",
+      "note": "source checkout; provenance only"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "REFERENCES",
+      "target": "kolmaf://provider/matrix",
+      "note": "memory runtime cites matrix-adjacent agent index"
+    }
+  ],
+  "provenance": {
+    "evidence": "PROVEN",
+    "note": "Slice-1: git checkout, data runtime.tsv, templates, relay, scripts all inspected"
+  }
+}

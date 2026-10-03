@@ -1,0 +1,66 @@
+{
+  "bindings": {
+    "schema_version": "adversarial-envelope-schema-v2.0.0-preprototype",
+    "schema_commit": "e0e700dd76e385ca41c0a79bbbc908c91f325151",
+    "dataset_commit": "21b3c714a8c2b05ec1518fb480716b109aa7fac2"
+  },
+  "commands": {
+    "collect_only": "python3 -m pytest tests/adversarial_envelope --collect-only -q",
+    "full_run": "python3 -m pytest tests/adversarial_envelope -q --tb=short"
+  },
+  "assertion_semantics": "Each LC01-LC38 manifest entry provides input_fixture and expected_result. The test imports the future target symbol, calls it with the fixture, and asserts exact equality with expected_result. Missing modules/symbols are EXPECTED_IMPLEMENTATION_MISSING; stubs that return None/defaults become assertion mismatches rather than passes.",
+  "totals": {
+    "contracts": 38,
+    "expected_red": 38,
+    "unexpected_pass": 0,
+    "unexpected_exception": 0
+  },
+  "categories": {
+    "EXPECTED_IMPLEMENTATION_MISSING": {"count": 38},
+    "TEST_OR_FIXTURE_DEFECT": {"count": 0},
+    "SCHEMA_BINDING_FAILURE": {"count": 0},
+    "DATASET_BINDING_FAILURE": {"count": 0},
+    "UNEXPECTED_PASS": {"count": 0},
+    "UNEXPECTED_EXCEPTION": {"count": 0}
+  },
+  "entries": [
+    {"contract_id":"LC01","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC01_supported_proposal_can_be_presented_before_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":115},
+    {"contract_id":"LC02","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC02_confirmation_cannot_precede_presentation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":116},
+    {"contract_id":"LC03","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC03_confirmation_binds_to_exact_proposal_id]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":117},
+    {"contract_id":"LC04","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC04_payload_hash_mismatch_invalidates_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":118},
+    {"contract_id":"LC05","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC05_state_hash_mismatch_invalidates_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":119},
+    {"contract_id":"LC06","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC06_expired_proposal_invalidates_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":120},
+    {"contract_id":"LC07","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC07_superseded_proposal_invalidates_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":121},
+    {"contract_id":"LC08","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC08_confirmed_proposal_can_remain_execution_ineligible_while_later]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":122},
+    {"contract_id":"LC09","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC09_policy_denial_overrides_valid_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":123},
+    {"contract_id":"LC10","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC10_runtime_readiness_does_not_override_missing_confirmation]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":124},
+    {"contract_id":"LC11","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC11_transport_readiness_does_not_override_policy_denial]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":125},
+    {"contract_id":"LC12","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC12_proposal_support_is_derived_from_primary_inputs]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":126},
+    {"contract_id":"LC13","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC13_resolver_does_not_accept_caller_supplied_proposal_support]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":127},
+    {"contract_id":"LC14","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC14_only_one_producer_derives_execution_eligibility]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":128},
+    {"contract_id":"LC15","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC15_serialized_derived_value_mismatch_is_rejected]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":129},
+    {"contract_id":"LC16","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC16_informational_child_can_be_answered_while_action_child]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":130},
+    {"contract_id":"LC17","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC17_parent_execution_remains_withheld_when_any_action_child]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":131},
+    {"contract_id":"LC18","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC18_not_applicable_remains_neutral]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":132},
+    {"contract_id":"LC19","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC19_not_checked_blocks_dependent_positive_conclusions]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":133},
+    {"contract_id":"LC20","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC20_purpose_scoped_evidence_sufficiency_is_enforced]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":134},
+    {"contract_id":"LC21","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC21_derivative_source_counts_do_not_create_canonical_authority]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":135},
+    {"contract_id":"LC22","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC22_confirmation_scope_must_cover_the_relevant_part]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":136},
+    {"contract_id":"LC23","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC23_proposal_support_derivation_accepts_only_primary_inputs]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":137},
+    {"contract_id":"LC24","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC24_confirmation_scope_exact_part_with_missing_or_invalid]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":138},
+    {"contract_id":"LC25","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC25_producer_exclusivity_resolve_response_has_no_execution_eligibility]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":139},
+    {"contract_id":"LC26","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC26_field_path_normalization_policy_status_state_not_used]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":140},
+    {"contract_id":"LC27","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC27_proposalsupport_enum_includes_not_checked]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":141},
+    {"contract_id":"LC28","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC28_proposal_support_input_primary_source_quality_assessment_is]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":142},
+    {"contract_id":"LC29","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC29_capability_fields_do_not_consume_proposal_support]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":143},
+    {"contract_id":"LC30","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC30_parameter_fields_do_not_consume_proposal_support]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":144},
+    {"contract_id":"LC31","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC31_proposal_support_does_not_consume_policy_status]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":145},
+    {"contract_id":"LC32","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC32_unresolved_reconciliation_blocks_supported_proposal]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":146},
+    {"contract_id":"LC33","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC33_proposalsupport_field_and_enum_contain_identical_values]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":147},
+    {"contract_id":"LC34","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC34_proposal_expiry_invalidates_confirmation_validity]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":148},
+    {"contract_id":"LC35","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC35_exact_part_confirmation_rejects_informational_child]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":149},
+    {"contract_id":"LC36","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC36_parent_confirmation_cannot_confirm_child_action]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":150},
+    {"contract_id":"LC37","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC37_actionable_child_requires_presentation_record]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":151},
+    {"contract_id":"LC38","nodeid":"tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::test_phase4_lifecycle_contract[LC38_all_derive_proposal_support_inputs_have_authoritative_producers]","expected_category":"EXPECTED_IMPLEMENTATION_MISSING","source_line":152}
+  ]
+}
