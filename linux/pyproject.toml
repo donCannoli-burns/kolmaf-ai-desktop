@@ -40,5 +40,6 @@ addopts = ["-p", "no:langsmith_plugin"]
 markers = [
     "external_integration: asserts the real external provider constellation or sibling workspaces; excluded from the portable CI gate",
     "local_runtime: requires machine-local installed state (generated data/runtime registry, installed ~/.kolmafia targets); excluded from the portable CI gate",
+    "local_artifact: requires intentionally non-public historical/source evidence artifacts (KOLMAF_PRIVATE_EVAL_ROOT); excluded from the portable CI gate",
     "legacy: superseded historical test retained for reference; excluded from the portable CI gate",
 ]

@@ -1,7 +1,6 @@
 """Tests for the retrieval evaluation harness."""
 # pylint: disable=protected-access
 
-import hashlib
 import sqlite3
 from pathlib import Path
 
@@ -664,34 +663,3 @@ def test_confidence_rate_derived(tmp_path: Path) -> None:
                 )
         # Verify it's a valid rate
         assert 0.0 <= conf_rate <= 1.0, f"confidence_rate={conf_rate} out of range"
-
-
-# ---------------------------------------------------------------------------
-# Original artifact SHA-256 preservation (§7.1)
-# ---------------------------------------------------------------------------
-
-
-DATASET_PATH = (
-    Path(__file__).resolve().parent.parent / "data" / "eval" / "dataset.json"
-)
-CHECKPOINT_PATH = (
-    Path(__file__).resolve().parent.parent / "data" / "eval" / "checkpoint-002.json"
-)
-
-DATASET_EXPECTED_SHA256 = "0874fdc79d66ee2f42aa94e06144ff2fa0309ad535e49106e34b05f352720a6a"
-CHECKPOINT_EXPECTED_SHA256 = "6795d2f95263bb06399aad5a1c3a2350999d837d691c29e4e20973644ddf519e"
-
-
-def test_original_artifact_sha256() -> None:
-    """Verify original dataset and checkpoint bytes match supplied SHA-256 (§7.1)."""
-    dataset_hash = hashlib.sha256(DATASET_PATH.read_bytes()).hexdigest()
-    assert dataset_hash == DATASET_EXPECTED_SHA256, (
-        f"dataset.json SHA-256 mismatch: got {dataset_hash}, "
-        f"expected {DATASET_EXPECTED_SHA256}"
-    )
-
-    checkpoint_hash = hashlib.sha256(CHECKPOINT_PATH.read_bytes()).hexdigest()
-    assert checkpoint_hash == CHECKPOINT_EXPECTED_SHA256, (
-        f"checkpoint-002.json SHA-256 mismatch: got {checkpoint_hash}, "
-        f"expected {CHECKPOINT_EXPECTED_SHA256}"
-    )

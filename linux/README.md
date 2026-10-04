@@ -512,6 +512,41 @@ Run from `$HOME/repos/build-dev/build-dev-ai-kol/kolmaf-AI/kolmaf-ai`:
 | Response proposal | Temp `KOLMAFA_KOLMAFIA_HOME` fixture plus `kolmafa respond player` | Prints labels and fixed proposal only; no write-back. |
 | REPL response proposal | Temp `KOLMAFA_KOLMAFIA_HOME` fixture plus `kolmafa repl --once "respond player"` | Same one-shot proposal semantics as CLI. |
 
+## Test portability and private artifacts
+
+Evaluation-related tests are split along a public/private boundary:
+
+- **Portable evaluation semantics (public CI).** Projection and evaluator
+  contract tests run in the public portable CI gate using synthetic,
+  repository-contained inputs only: hand-authored cases under
+  `tests/fixtures/adversarial_envelope/` and `tmp_path` corpora. They never
+  read `linux/data/eval/`. A narrow guard
+  (`tests/test_portable_eval_data_boundary.py`) fails the gate if any
+  portable test regains a direct path dependency on `data/eval/`.
+- **Historical artifact preservation (`local_artifact` marker).** Exact
+  verification against the historical evaluation artifacts — multipart
+  projection alignment for A074/A080/A084 and malformed-request
+  clarification for A044/A046/A048
+  (`tests/adversarial_envelope/test_dataset_projection_historical.py`), and
+  the frozen dataset.json / checkpoint-002.json SHA-256 pins
+  (`tests/test_eval_historical_artifacts.py`) — is marked `local_artifact`
+  and deselected from the portable CI gate. The assertions and SHA pins are
+  unchanged; only artifact path resolution moved behind the boundary.
+- **Private `data/eval/` is intentionally not published.** The historical
+  artifacts (`dataset.json`, `checkpoint-002.json`,
+  `adversarial-envelope-aligned-v2.0.0-preprototype.json`,
+  `adversarial-envelope-expected-packets-v2.0.0-preprototype.json`) are
+  deliberately absent from this repository. No public fixture reproduces
+  their bytes or rows.
+
+`KOLMAF_PRIVATE_EVAL_ROOT` is an optional environment variable required only
+for local historical verification. When unset (always in CI), `local_artifact`
+tests skip precisely. When set, it must point at a directory containing the
+four artifact filenames above; missing artifacts skip precisely. The helper
+(`tests/fixtures/private_eval.py`) contains no private paths, artifact bytes,
+or download data. This is distinct from `local_runtime`, which covers
+machine-local installed KoLmafia state.
+
 ## Source parity anchors
 
 - Config variables and player validation: `src/kolmafa/config.py:11-85`.

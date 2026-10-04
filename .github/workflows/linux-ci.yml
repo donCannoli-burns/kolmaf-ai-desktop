@@ -13,6 +13,9 @@
 #     workspaces. Deselected here.
 #   local_runtime: machine-local installed state (generated data/runtime
 #     registry, installed ~/.kolmafia targets). Deselected here.
+#   local_artifact: requires intentionally non-public historical/source
+#     evidence artifacts supplied via KOLMAF_PRIVATE_EVAL_ROOT (optional;
+#     unset in CI). Deselected here.
 #   legacy: superseded historical tests. Deselected here.
 #
 # Test profile (portable offline only):
@@ -23,11 +26,10 @@
 #         = ACCIDENTALLY_PATH_COUPLED (not yet repaired)
 #       linux/tests/adversarial_envelope/test_phase6_evaluation.py
 #         = LEGACY_TEST
-#       linux/tests/adversarial_envelope/test_dataset_projection_contract.py
-#         = REQUIRES_LOCAL_ONLY_DATA (data/eval/ not in public repo)
-#     And one test deselection:
-#       linux/tests/test_eval.py::test_original_artifact_sha256
-#         = REQUIRES_LOCAL_ONLY_DATA (data/eval/ checksum verification)
+#     Portable evaluation semantics are verified with synthetic
+#     repository-contained fixtures; exact historical artifact verification
+#     (test_dataset_projection_historical.py, test_eval_historical_artifacts.py)
+#     is local_artifact and deselected by marker.
 # The portable checkpoint verifier
 # (linux/scripts/verify-native-can-equip-checkpoint-portable) runs here; it is
 # repository-only and never claims installed-runtime READY. The local
@@ -94,9 +96,7 @@ jobs:
           python -m pytest linux/tests -q \
             --ignore=linux/tests/adversarial_envelope/test_phase4_lifecycle_contracts.py \
             --ignore=linux/tests/adversarial_envelope/test_phase6_evaluation.py \
-            --ignore=linux/tests/adversarial_envelope/test_dataset_projection_contract.py \
-            -m "not external_integration and not local_runtime and not legacy" \
-            -k "not test_original_artifact_sha256"
+            -m "not external_integration and not local_runtime and not local_artifact and not legacy"
       - name: Portable native.can-equip checkpoint
         run: PYTHON=python linux/scripts/verify-native-can-equip-checkpoint-portable
       - name: Prove live writer selection unavailable

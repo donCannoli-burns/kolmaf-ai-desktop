@@ -1,4 +1,10 @@
-"""Dataset-facing packet projection contracts."""
+"""Dataset-facing packet projection contracts (portable, repository-contained).
+
+Portable semantic contract only: synthetic cases under
+tests/fixtures/adversarial_envelope/ exercise projection semantics without the
+intentionally non-public historical artifacts. Exact historical alignment
+verification lives in test_dataset_projection_historical.py (local_artifact).
+"""
 
 from __future__ import annotations
 
@@ -10,7 +16,21 @@ import pytest
 from kolmafa.adversarial_envelope.dataset_projection import project_dataset_packet
 
 
-DATA_DIR = Path(__file__).resolve().parents[2] / "data" / "eval"
+FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures" / "adversarial_envelope"
+
+# Independently specified standard malformed-request clarification prompt.
+# Matches the projection contract constant; asserted here as a fixed expectation.
+EXPECTED_MALFORMED_CLARIFICATION_PROMPT = "Please clarify the in-scope KoL or ASH request."
+
+
+def _synthetic_cases() -> dict[str, dict[str, object]]:
+    data = json.loads((FIXTURES_DIR / "projection_cases.json").read_text(encoding="utf-8"))
+    return data["cases"]  # type: ignore[no-any-return]
+
+
+def _expected_packets() -> dict[str, dict[str, object]]:
+    data = json.loads((FIXTURES_DIR / "projection_expected.json").read_text(encoding="utf-8"))
+    return data["expected_packets"]  # type: ignore[no-any-return]
 
 
 def _case(**overrides: object) -> dict[str, object]:
@@ -43,22 +63,6 @@ def _case(**overrides: object) -> dict[str, object]:
     return case
 
 
-def _aligned_case(case_id: str) -> dict[str, object]:
-    data = json.loads(
-        (DATA_DIR / "adversarial-envelope-aligned-v2.0.0-preprototype.json").read_text(encoding="utf-8")
-    )
-    return next(case for case in data["cases"] if case["id"] == case_id)
-
-
-def _expected_packet(case_id: str) -> dict[str, object]:
-    data = json.loads(
-        (DATA_DIR / "adversarial-envelope-expected-packets-v2.0.0-preprototype.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    return data["expected_packets"][case_id]
-
-
 def test_projects_required_dataset_sections_from_aligned_case() -> None:
     packet = project_dataset_packet(_case())
 
@@ -88,10 +92,10 @@ def test_projects_required_dataset_sections_from_aligned_case() -> None:
     assert "schema" not in packet
 
 
-@pytest.mark.parametrize("case_id", ["A074", "A080", "A084"])
-def test_projection_preserves_residual_multipart_child_shape(case_id: str) -> None:
-    case = _aligned_case(case_id)
-    expected = _expected_packet(case_id)
+@pytest.mark.parametrize("case_id", ["SYN-MULTI-001", "SYN-MULTI-002"])
+def test_projection_preserves_synthetic_multipart_child_shape(case_id: str) -> None:
+    case = _synthetic_cases()[case_id]
+    expected = _expected_packets()[case_id]
 
     packet = project_dataset_packet(case)
 
@@ -99,17 +103,47 @@ def test_projection_preserves_residual_multipart_child_shape(case_id: str) -> No
     assert packet["parts"] == expected["parts"]
     assert packet["parent_aggregation"] == expected["parent_aggregation"]
 
+    # Explicit multipart invariants (synthetic contract dimensions):
+    assert packet["request"]["is_multi_part"] is True
+    assert packet["request"]["text"] == packet["request"]["interpreted"] == case["question"]
+    assert packet["request"]["parts"] == [part["sub_request"] for part in packet["parts"]]
 
-@pytest.mark.parametrize("case_id", ["A044", "A046", "A048"])
+    info_part, action_part = packet["parts"]
+    # Child identities
+    assert info_part["part_id"] == f"{case_id}-part-info"
+    assert action_part["part_id"] == f"{case_id}-part-action"
+    assert info_part["part_type"] == "informational"
+    assert action_part["part_type"] == "action"
+    # Child response state
+    assert info_part["resolution"]["recommended_response"] == "answer"
+    assert action_part["resolution"]["recommended_response"] == "explain_withholding"
+    # Child execution eligibility
+    assert info_part["resolution"]["execution_eligibility"] == "not_applicable"
+    assert action_part["resolution"]["execution_eligibility"] in {"awaiting_live_state", "withheld"}
+    # Child policy and withholding
+    assert info_part["policy"]["status"] == "permitted"
+    assert action_part["policy"]["status"] == "denied"
+    assert info_part["semantic_labels"] == []
+    assert action_part["semantic_labels"] == case["semantic_labels"]
+    assert action_part["withholding_reasons"] == case["semantic_labels"]
+    # Parent aggregation semantics
+    assert packet["parent_aggregation"]["available_informational_parts"] == [info_part["part_id"]]
+    assert packet["parent_aggregation"]["blocked_action_parts"] == [action_part["part_id"]]
+    assert packet["parent_aggregation"]["overall_status"] == "partial"
+    assert packet["parent_aggregation"]["response_available"] is True
+
+
+@pytest.mark.parametrize(
+    "case_id", ["SYN-MALFORMED-001", "SYN-MALFORMED-002", "SYN-MALFORMED-003"]
+)
 def test_projection_uses_standard_malformed_request_clarification_prompt(case_id: str) -> None:
-    case = _aligned_case(case_id)
-    expected = _expected_packet(case_id)
+    case = _synthetic_cases()[case_id]
 
     packet = project_dataset_packet(case)
 
     assert case["semantic_labels"] == ["malformed_request"]
     assert packet["answer"]["clarification_possible"] is True
-    assert packet["answer"]["clarification_prompt"] == expected["answer"]["clarification_prompt"]
+    assert packet["answer"]["clarification_prompt"] == EXPECTED_MALFORMED_CLARIFICATION_PROMPT
 
 
 @pytest.mark.parametrize(
