@@ -532,6 +532,22 @@ Evaluation-related tests are split along a public/private boundary:
   (`tests/test_eval_historical_artifacts.py`) — is marked `local_artifact`
   and deselected from the portable CI gate. The assertions and SHA pins are
   unchanged; only artifact path resolution moved behind the boundary.
+- **Historical Phase 6 evaluator test (`legacy` marker).** The Phase 6
+  offline evaluation script (`phase6_eval.py`) is a historical implementation
+  artifact of an obsolete multi-repo workspace layout, not part of the current
+  public runtime. Its five contracts (canonical JSON stability, nested diff
+  paths, fail-closed serialization validation, one-record-per-frozen-case
+  evaluation, dataset-packet projection delegation) are preserved unchanged in
+  `tests/adversarial_envelope/test_phase6_evaluation.py`, now marked
+  `legacy` and deselected from the portable CI gate by marker. The script is
+  supplied explicitly via `KOLMAF_LEGACY_PHASE6_SCRIPT` (a direct file path);
+  when unset, the tests skip precisely. The portable CI gate no longer hides
+  the file by pathname (zero whole-file exclusions remain). Of the five
+  historical functions, only `build_actual_packet`'s behavior has a current
+  equivalent
+  (`kolmafa.adversarial_envelope.dataset_projection.project_dataset_packet`,
+  portably tested); the other four are historical-only. This is recorded
+  taxonomy, not outstanding portability debt.
 - **Private `data/eval/` is intentionally not published.** The historical
   artifacts (`dataset.json`, `checkpoint-002.json`,
   `adversarial-envelope-aligned-v2.0.0-preprototype.json`,

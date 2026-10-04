@@ -8,9 +8,10 @@ portable gate regains a direct path dependency on the private data/eval/
 directory.
 
 Scope is deliberately small: pytest-collectable files under linux/tests/,
-minus the two whole-file CI ignores, minus local_artifact-marked files (which
-resolve artifacts via KOLMAF_PRIVATE_EVAL_ROOT and never reference data/eval/
-by path), minus this guard itself.
+minus local_artifact-marked files (which resolve artifacts via
+KOLMAF_PRIVATE_EVAL_ROOT and never reference data/eval/ by path), minus
+this guard itself. The portable CI gate retains zero whole-file exclusions;
+marker deselection alone keeps non-portable tests out of the gate.
 """
 
 from __future__ import annotations
@@ -20,10 +21,9 @@ from pathlib import Path
 TESTS_DIR = Path(__file__).resolve().parent
 
 # Whole-file ignores retained by .github/workflows/linux-ci.yml.
-PORTABLE_GATE_WHOLE_FILE_IGNORES = {
-    "adversarial_envelope/test_phase4_lifecycle_contracts.py",
-    "adversarial_envelope/test_phase6_evaluation.py",
-}
+# The final whole-file exclusion cleanup left zero entries: every test file
+# collects normally and is deselected by marker when non-portable.
+PORTABLE_GATE_WHOLE_FILE_IGNORES: set[str] = set()
 
 # Path-construction forms that would couple a test to the private directory.
 FORBIDDEN_FRAGMENTS = (

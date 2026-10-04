@@ -20,15 +20,16 @@
 #
 # Test profile (portable offline only):
 #   - DevTest safety suite: linux/tests/devtest
-#   - Portable offline test gate: linux/tests/ with marker deselection, minus
-#     pre-existing whole-file exclusions:
-#       linux/tests/adversarial_envelope/test_phase6_evaluation.py
-#         = LEGACY_TEST
-#     Portable evaluation semantics are verified with synthetic
+#   - Portable offline test gate: linux/tests/ with marker deselection.
+#     Zero whole-file exclusions remain: every test file collects normally
+#     and marker deselection alone keeps non-portable tests out of the
+#     gate. Portable evaluation semantics are verified with synthetic
 #     repository-contained fixtures; exact historical artifact verification
 #     (test_dataset_projection_historical.py, test_eval_historical_artifacts.py,
 #     test_phase4_lifecycle_contracts.py::TestPhase4HistoricalBindings)
-#     is local_artifact and deselected by marker.
+#     is local_artifact and deselected by marker, and the historical Phase 6
+#     evaluator test (test_phase6_evaluation.py) is legacy and deselected
+#     by marker.
 # The portable checkpoint verifier
 # (linux/scripts/verify-native-can-equip-checkpoint-portable) runs here; it is
 # repository-only and never claims installed-runtime READY. The local
@@ -93,7 +94,6 @@ jobs:
       - name: Portable offline test gate
         run: |
           python -m pytest linux/tests -q \
-            --ignore=linux/tests/adversarial_envelope/test_phase6_evaluation.py \
             -m "not external_integration and not local_runtime and not local_artifact and not legacy"
       - name: Portable native.can-equip checkpoint
         run: PYTHON=python linux/scripts/verify-native-can-equip-checkpoint-portable
