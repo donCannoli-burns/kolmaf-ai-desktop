@@ -1,0 +1,33 @@
+{
+  "schema_version": "adversarial-envelope-schema-v2.0.0-preprototype",
+  "historical_schema_commit": "e0e700dd76e385ca41c0a79bbbc908c91f325151",
+  "historical_dataset_commit": "21b3c714a8c2b05ec1518fb480716b109aa7fac2",
+  "phase4_contract_manifest_sha256": "5c3ab7717b9fba380ae119eb7a38e763281b4e5d225efa6ed092e7af3c847bcb",
+  "historical_failure_inventory_sha256": "5f7e8ddd5d2d0f2c9728b3eb1f4418722f9c9525d07d8f4300924bd945b1f07e",
+  "public_source_snapshot": {
+    "manifest_path": "linux/tests/adversarial_envelope/phase4_contract_manifest.json",
+    "historical_inventory_path": "linux/tests/adversarial_envelope/phase4_failure_inventory.historical.json",
+    "target_modules": [
+      "kolmafa.adversarial_envelope.action_validation",
+      "kolmafa.adversarial_envelope.confirmation",
+      "kolmafa.adversarial_envelope.eligibility",
+      "kolmafa.adversarial_envelope.evidence",
+      "kolmafa.adversarial_envelope.lifecycle",
+      "kolmafa.adversarial_envelope.multipart",
+      "kolmafa.adversarial_envelope.proposal_support",
+      "kolmafa.adversarial_envelope.reconciliation",
+      "kolmafa.adversarial_envelope.resolver",
+      "kolmafa.adversarial_envelope.schema",
+      "kolmafa.adversarial_envelope.validation"
+    ],
+    "source_root": "linux/src/kolmafa/adversarial_envelope",
+    "provenance": "Manifest and historical inventory are repository-contained test fixtures. Target modules resolve under linux/src/kolmafa/adversarial_envelope via the package import path. Historical schema/dataset commit hashes are provenance identity only; they are not resolvable in this repository's Git history and no historical Git objects are required to run the portable Phase 4 checks."
+  },
+  "contract_count": 38,
+  "contract_ids": [
+    "LC01", "LC02", "LC03", "LC04", "LC05", "LC06", "LC07", "LC08", "LC09", "LC10",
+    "LC11", "LC12", "LC13", "LC14", "LC15", "LC16", "LC17", "LC18", "LC19", "LC20",
+    "LC21", "LC22", "LC23", "LC24", "LC25", "LC26", "LC27", "LC28", "LC29", "LC30",
+    "LC31", "LC32", "LC33", "LC34", "LC35", "LC36", "LC37", "LC38"
+  ]
+}
