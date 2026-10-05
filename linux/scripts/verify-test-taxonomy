@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Verify the frozen test taxonomy inventory against live pytest collection.
+
+Governance verifier for the public portable CI gate. Proves, fail-closed:
+
+  1. Every inventoried node ID exists in pytest collection.
+  2. Every collected node carrying a non-portable marker is inventoried
+     (a new external_integration/local_runtime/local_artifact/legacy test
+     without an inventory entry fails).
+  3. Each inventoried node's classification matches its effective pytest
+     marker set (a local_runtime test that loses its marker, or a legacy
+     test that becomes unmarked, fails).
+  4. No collected node carries more than one non-portable marker
+     (conflicting taxonomy classes fail).
+  5. No unexpected taxonomy class appears in the inventory or in
+     collection, and no duplicate node IDs exist in the inventory.
+  6. Documented per-class counts match derived unique counts.
+  7. pyproject.toml registers exactly the four taxonomy markers and the
+     inventory marker expression matches the CI deselection expression.
+
+Runs entirely offline: pytest collection only, no network, no local
+runtime state, no secrets. Exit 0 = taxonomy frozen and consistent;
+exit 1 = drift (fail closed).
+"""
+
+from __future__ import annotations
+
+import contextlib
+import io
+import json
+import re
+import sys
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]  # linux/
+TESTS_DIR = ROOT / "tests"
+INVENTORY_PATH = TESTS_DIR / "test_taxonomy_inventory.json"
+PYPROJECT_PATH = ROOT / "pyproject.toml"
+
+TAXONOMY_CLASSES = ("external_integration", "local_runtime", "local_artifact", "legacy")
+MARKER_EXPRESSION = "not external_integration and not local_runtime and not local_artifact and not legacy"
+SCHEMA = "kolmaf-test-taxonomy/v1"
+
+collected: dict[str, set[str]] = {}
+
+
+class _Collector:
+    def pytest_collection_modifyitems(self, session, config, items):
+        for item in items:
+            collected[item.nodeid] = {m.name for m in item.iter_markers()}
+
+
+def fail(problems: list[str], message: str) -> None:
+    problems.append(message)
+
+
+def main() -> int:
+    problems: list[str] = []
+
+    if not INVENTORY_PATH.is_file():
+        print(f"FAIL inventory missing: {INVENTORY_PATH}", file=sys.stderr)
+        return 1
+    try:
+        inventory = json.loads(INVENTORY_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        print(f"FAIL inventory is not valid JSON: {exc}", file=sys.stderr)
+        return 1
+
+    if inventory.get("schema") != SCHEMA:
+        fail(problems, f"inventory schema must be {SCHEMA!r}")
+
+    # --- collection (pytest semantics, not grep) ---------------------------
+    with contextlib.redirect_stdout(io.StringIO()):
+        rc = pytest.main(
+            [str(TESTS_DIR), "--collect-only", "-q", "-p", "no:langsmith_plugin"],
+            plugins=[_Collector()],
+        )
+    if rc != 0:
+        fail(problems, f"pytest collection failed with rc={rc}")
+
+    nonportable = {
+        nodeid: markers & set(TAXONOMY_CLASSES)
+        for nodeid, markers in collected.items()
+        if markers & set(TAXONOMY_CLASSES)
+    }
+
+    # --- inventory structure ------------------------------------------------
+    classes = inventory.get("classes", {})
+    unexpected_in_inventory = set(classes) - set(TAXONOMY_CLASSES)
+    if unexpected_in_inventory:
+        fail(problems, f"unexpected taxonomy classes in inventory: {sorted(unexpected_in_inventory)}")
+    missing_in_inventory = set(TAXONOMY_CLASSES) - set(classes)
+    if missing_in_inventory:
+        fail(problems, f"taxonomy classes missing from inventory: {sorted(missing_in_inventory)}")
+
+    seen: set[str] = set()
+    inventoried: dict[str, str] = {}
+    for cls in TAXONOMY_CLASSES:
+        for entry in classes.get(cls, {}).get("tests", []):
+            nodeid = entry.get("nodeid", "")
+            classification = entry.get("classification", "")
+            if not nodeid or not classification:
+                fail(problems, f"inventory entry missing nodeid/classification: {entry!r}")
+                continue
+            if nodeid in seen:
+                fail(problems, f"duplicate node ID in inventory: {nodeid}")
+            seen.add(nodeid)
+            inventoried[nodeid] = classification
+            if classification != cls:
+                fail(problems, f"classification mismatch for {nodeid}: entry says {classification!r}, listed under {cls!r}")
+
+    # --- check 1: every inventoried node exists ------------------------------
+    for nodeid in sorted(inventoried):
+        if nodeid not in collected:
+            fail(problems, f"inventoried node does not exist in collection (deleted test?): {nodeid}")
+
+    # --- check 2: every non-portable marked node is inventoried --------------
+    for nodeid in sorted(nonportable):
+        if nodeid not in inventoried:
+            fail(problems, f"non-portable marked node missing from inventory (new test?): {nodeid}")
+
+    # --- check 3: classification matches effective marker ---------------------
+    for nodeid, classification in sorted(inventoried.items()):
+        if nodeid not in collected:
+            continue  # already reported as missing
+        effective = nonportable.get(nodeid, set())
+        if classification not in effective:
+            fail(
+                problems,
+                f"classification mismatch for {nodeid}: inventory says {classification!r}, "
+                f"effective non-portable markers: {sorted(effective) or 'none (unmarked?)'}",
+            )
+
+    # --- check 4: no conflicting non-portable classes ------------------------
+    for nodeid, markers in sorted(nonportable.items()):
+        if len(markers) > 1:
+            fail(problems, f"conflicting non-portable classes on {nodeid}: {sorted(markers)}")
+
+    # --- check 5: no unknown taxonomy markers in collection -------------------
+    unknown_markers = set()
+    for markers in collected.values():
+        unknown_markers |= markers - set(TAXONOMY_CLASSES) - {"parametrize"}
+    # Only markers that look like taxonomy classes (registered in pyproject) matter;
+    # pyproject check below covers registration. Unknown *taxonomy* markers would
+    # have been caught by check 2/3 only if in TAXONOMY_CLASSES, so flag any
+    # collected marker named like a taxonomy class but not in the inventory set.
+    for marker in sorted(unknown_markers):
+        if marker.endswith(("_integration", "_runtime", "_artifact", "_legacy")):
+            fail(problems, f"unknown taxonomy-like marker in collection: {marker}")
+
+    # --- check 6: documented counts match derived counts ----------------------
+    derived_counts = {cls: 0 for cls in TAXONOMY_CLASSES}
+    for nodeid, markers in nonportable.items():
+        for cls in markers:
+            derived_counts[cls] += 1
+    documented = inventory.get("counts", {})
+    for cls in TAXONOMY_CLASSES:
+        if documented.get(cls) != derived_counts[cls]:
+            fail(
+                problems,
+                f"count mismatch for {cls}: inventory documents {documented.get(cls)!r}, "
+                f"derived unique count is {derived_counts[cls]}",
+            )
+
+    # --- check 7: pyproject marker registration + expression -------------------
+    pyproject = PYPROJECT_PATH.read_text(encoding="utf-8")
+    registered = set(re.findall(r'"([a-z_]+):', pyproject.split("markers = [")[1].split("]")[0])) if "markers = [" in pyproject else set()
+    if registered != set(TAXONOMY_CLASSES):
+        fail(problems, f"pyproject.toml markers {sorted(registered)} != taxonomy classes {sorted(TAXONOMY_CLASSES)}")
+    if inventory.get("marker_expression") != MARKER_EXPRESSION:
+        fail(problems, f"inventory marker_expression must be {MARKER_EXPRESSION!r}")
+
+    # --- verdict ---------------------------------------------------------------
+    if problems:
+        print(f"TEST TAXONOMY DRIFT ({len(problems)} problem(s)):", file=sys.stderr)
+        for problem in problems:
+            print(f"  - {problem}", file=sys.stderr)
+        return 1
+
+    total = len(collected)
+    portable = total - len(nonportable)
+    print("TEST TAXONOMY FROZEN: inventory matches pytest collection")
+    print(f"  collected unique tests: {total}")
+    print(f"  portable (unmarked): {portable}")
+    for cls in TAXONOMY_CLASSES:
+        print(f"  {cls}: {derived_counts[cls]}")
+    print(f"  marker overlap (multi-class tests): 0")
+    print(f"  marker expression: -m {MARKER_EXPRESSION!r}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -579,6 +579,32 @@ installations skip precisely; present-but-wrong installations fail. The
 local checkpoint verifier (`scripts/verify-native-can-equip-checkpoint-local`)
 shares these roots via `KOLMAFA_KOLMAFIA_HOME` and `KOLMAF_RUNTIME_ROOT`.
 
+### Test taxonomy inventory
+
+The canonical inventory is `linux/tests/test_taxonomy_inventory.json`
+(schema `kolmaf-test-taxonomy/v1`). It enumerates every intentionally
+non-portable test with its classification, rationale, and required
+environment; portable tests are the default and are not listed individually.
+`linux/scripts/verify-test-taxonomy` re-derives the taxonomy from pytest
+collection semantics and fails CI closed on any drift (new non-portable
+test without an inventory entry, lost/conflicting marker, stale inventory
+entry, or count mismatch). Marker selection is
+`-m "not external_integration and not local_runtime and not local_artifact and not legacy"`;
+there are zero whole-file ignores and zero `-k` exclusions.
+
+| Class | Meaning | Public CI | Typical evidence |
+| --- | --- | --- | --- |
+| portable (unmarked) | Repository-contained contract | runs | source, `tests/fixtures/`, `tmp_path` |
+| `external_integration` | External project/corpus compatibility | deselected | KOL_Master corpus, provider constellation |
+| `local_runtime` | Installed runtime state | deselected | `~/.kolmafia` runtime projections, generated `data/runtime` registry |
+| `local_artifact` | Intentionally private historical evidence | deselected | configured `KOLMAF_PRIVATE_EVAL_ROOT` |
+| `legacy` | Historical superseded implementation | deselected | optional historical source (`KOLMAF_LEGACY_PHASE6_SCRIPT`) |
+
+Current frozen counts: 664 portable + 21 `external_integration` + 9
+`local_runtime` + 9 `local_artifact` + 5 `legacy` = 708 unique tests, with
+zero marker overlap (exactly one non-portable evidence class per
+non-portable test).
+
 ## Source parity anchors
 
 - Config variables and player validation: `src/kolmafa/config.py:11-85`.

@@ -47,6 +47,13 @@
 # are local_runtime: collected then deselected by marker here, executed
 # only on operator hosts with the real installation present.
 #
+# Taxonomy governance: the frozen inventory
+# (linux/tests/test_taxonomy_inventory.json, schema kolmaf-test-taxonomy/v1)
+# is verified by linux/scripts/verify-test-taxonomy before any test step
+# runs. It fails closed on taxonomy drift: a new non-portable test without
+# an inventory entry, a lost or conflicting marker, an inventory entry for
+# a deleted test, or a documented/derived count mismatch all fail CI.
+#
 # Live boundary: KOLMAFA_LIVE_RELAY_ENABLED is forced to the safest value
 # ("false") and no relay credential is provided, so ActionBroker._select_writer
 # can only return DryRunGcliWriter. A dedicated step asserts this.
@@ -86,6 +93,8 @@ jobs:
           python-version: "3.13"
       - name: Install test dependencies
         run: python -m pip install "pytest>=8.0"
+      - name: Verify test taxonomy
+        run: linux/scripts/verify-test-taxonomy
       - name: Compile and import check
         run: |
           python -m compileall -q linux/src linux/tests

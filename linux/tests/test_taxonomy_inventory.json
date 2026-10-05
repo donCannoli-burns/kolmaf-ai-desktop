@@ -1,0 +1,304 @@
+{
+  "schema": "kolmaf-test-taxonomy/v1",
+  "marker_expression": "not external_integration and not local_runtime and not local_artifact and not legacy",
+  "portable_default": true,
+  "invariants": {
+    "exactly_one_non_portable_class_per_non_portable_test": true,
+    "portable_tests_are_unmarked": true,
+    "no_whole_file_ignores": true,
+    "no_k_exclusions": true
+  },
+  "counts": {
+    "external_integration": 21,
+    "local_runtime": 9,
+    "local_artifact": 9,
+    "legacy": 5
+  },
+  "classes": {
+    "external_integration": {
+      "purpose": "Asserts compatibility with the real external provider constellation or sibling workspaces (KOL_Master corpus/artifacts, committed provider manifests and their generated registry). Deselected from the portable CI gate by marker.",
+      "public_ci": "deselected",
+      "tests": [
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_authority_report_flags_advisory_hashtable_provenance_mismatch",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_authority_report_flags_csv_content_drift_without_mutation",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_authority_report_json_is_deterministic_and_read_only",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_authority_report_text_contains_equivalent_offline_read_only_summary",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_cli_load_outputs_deterministic_json_and_text",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_cli_validate_outputs_json_without_runtime_mutation",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_hashtable_checker_accepts_advisory_artifacts_and_provenance",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_hashtable_checker_detects_csv_to_capability_cache_drift",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_hashtable_checker_detects_tampered_frozen_shape",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_hashtable_checker_detects_tampered_provenance_checksum",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_load_fails_on_checksum_mismatch_without_mutation",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_load_replaces_records_and_adds_priority_annotations",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_load_rolls_back_on_missing_priority_entry_id",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_load_rolls_back_on_sqlite_constraint_failure",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_capability_import_external.py::test_real_validator_accepts_canonical_corpus_and_reports_checksum",
+          "classification": "external_integration",
+          "rationale": "Asserts importer behavior against the real external KOL_Master capability corpus (sibling workspace): corpus-specific row counts (997 capabilities, 386 priority annotations), frozen hashtable sizes, and provenance checksums. These facts are properties of the external corpus, not of the importer contract, so they are not reproduced by portable fixtures.",
+          "required_environment": "KOL_Master sibling workspace with reference/kolmafia_capability_index.csv, reference/kolmafia_priority_flags.csv, and graph/hashtable/*.json (resolved via repo-parent/KOL_Master, kolmaf-AI/KOL_Master, or donCannoli-dev-kolmaf-ai/KOL_Master)"
+        },
+        {
+          "nodeid": "tests/test_linkbus_contract.py::test_expected_ids_present",
+          "classification": "external_integration",
+          "rationale": "Asserts the real committed provider constellation composition (7 manifests, expected provider ID set, deterministic registry build) rather than synthetic fixtures; pins the integration surface itself."
+        },
+        {
+          "nodeid": "tests/test_linkbus_contract.py::test_registry_deterministic",
+          "classification": "external_integration",
+          "rationale": "Asserts the real committed provider constellation composition (7 manifests, expected provider ID set, deterministic registry build) rather than synthetic fixtures; pins the integration surface itself."
+        },
+        {
+          "nodeid": "tests/test_linkbus_contract.py::test_seven_manifests_load",
+          "classification": "external_integration",
+          "rationale": "Asserts the real committed provider constellation composition (7 manifests, expected provider ID set, deterministic registry build) rather than synthetic fixtures; pins the integration surface itself."
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_37_targets_44_uris_resolvable",
+          "classification": "external_integration",
+          "rationale": "Asserts the real provider constellation composition (7 provider roots; 37 targets / 44 URIs resolvable) in the generated linkbus registry; fails closed when the generated registry is absent.",
+          "required_environment": "Generated data/runtime/linkbus/registry.json (build artifact of the committed integration/providers manifests)"
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_seven_provider_roots",
+          "classification": "external_integration",
+          "rationale": "Asserts the real provider constellation composition (7 provider roots; 37 targets / 44 URIs resolvable) in the generated linkbus registry; fails closed when the generated registry is absent.",
+          "required_environment": "Generated data/runtime/linkbus/registry.json (build artifact of the committed integration/providers manifests)"
+        },
+        {
+          "nodeid": "tests/test_source_catalog_external.py::test_real_artifact_summary_is_deterministic_and_offline",
+          "classification": "external_integration",
+          "rationale": "Asserts summary facts of the real external KOL_Master source catalog artifact (kol_master_additions: 345 lines, >90 rows, category counts); artifact-specific facts not reproducible from public fixtures.",
+          "required_environment": "KOL_Master sibling workspace containing kol_master_additions"
+        }
+      ]
+    },
+    "local_runtime": {
+      "purpose": "Requires machine-local installed runtime state (installed ~/.kolmafia targets, generated data/runtime registry, installed agent bundle). Deselected from the portable CI gate by marker; runs only on operator hosts.",
+      "public_ci": "deselected",
+      "tests": [
+        {
+          "nodeid": "tests/devtest/test_capability_registry_local.py::test_real_bundle_registry_matches_don_advertisement",
+          "classification": "local_runtime",
+          "rationale": "Validates actual operator installation state: the portable agent-bundle capability registry and the installed KoLmafia relay helper health. Runs only on operator hosts with the real installation present; missing installations skip precisely.",
+          "required_environment": "KOLMAF_AGENT_BUNDLE_ROOT (agent bundle root; registry at <root>/data/capabilities/registry.json) and KOLMAFA_KOLMAFIA_HOME (KoLmafia home; helper at <home>/relay/don_native_can_equip.ash)"
+        },
+        {
+          "nodeid": "tests/devtest/test_capability_registry_local.py::test_real_helper_health_is_ready",
+          "classification": "local_runtime",
+          "rationale": "Validates actual operator installation state: the portable agent-bundle capability registry and the installed KoLmafia relay helper health. Runs only on operator hosts with the real installation present; missing installations skip precisely.",
+          "required_environment": "KOLMAF_AGENT_BUNDLE_ROOT (agent bundle root; registry at <root>/data/capabilities/registry.json) and KOLMAFA_KOLMAFIA_HOME (KoLmafia home; helper at <home>/relay/don_native_can_equip.ash)"
+        },
+        {
+          "nodeid": "tests/test_linkbus_contract.py::test_installed_target_exists_for_known_uri",
+          "classification": "local_runtime",
+          "rationale": "Requires machine-local installed provider targets: committed manifest target paths must exist on disk and known URIs must resolve to existing installed targets.",
+          "required_environment": "Installed provider targets on local disk (manifest target paths)"
+        },
+        {
+          "nodeid": "tests/test_linkbus_contract.py::test_required_targets_resolve",
+          "classification": "local_runtime",
+          "rationale": "Requires machine-local installed provider targets: committed manifest target paths must exist on disk and known URIs must resolve to existing installed targets.",
+          "required_environment": "Installed provider targets on local disk (manifest target paths)"
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_builder_does_not_touch_corpus",
+          "classification": "local_runtime",
+          "rationale": "Asserts against the real installed Matrix corpus via the generated data/runtime registry: frozen baseline summary (including 665 distinct mem pointers), builder non-mutation of the corpus, intact source-manifest SHA-256 pins, and corpus pointer grounding.",
+          "required_environment": "Installed Matrix corpus (~/.kolmafia projection) and generated data/runtime/linkbus/registry.json"
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_corpus_baseline_matches",
+          "classification": "local_runtime",
+          "rationale": "Asserts against the real installed Matrix corpus via the generated data/runtime registry: frozen baseline summary (including 665 distinct mem pointers), builder non-mutation of the corpus, intact source-manifest SHA-256 pins, and corpus pointer grounding.",
+          "required_environment": "Installed Matrix corpus (~/.kolmafia projection) and generated data/runtime/linkbus/registry.json"
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_real_corpus_pointer_grounding",
+          "classification": "local_runtime",
+          "rationale": "Asserts against the real installed Matrix corpus via the generated data/runtime registry: frozen baseline summary (including 665 distinct mem pointers), builder non-mutation of the corpus, intact source-manifest SHA-256 pins, and corpus pointer grounding.",
+          "required_environment": "Installed Matrix corpus (~/.kolmafia projection) and generated data/runtime/linkbus/registry.json"
+        },
+        {
+          "nodeid": "tests/test_matrix_overlay.py::test_source_manifest_pins_intact",
+          "classification": "local_runtime",
+          "rationale": "Asserts against the real installed Matrix corpus via the generated data/runtime registry: frozen baseline summary (including 665 distinct mem pointers), builder non-mutation of the corpus, intact source-manifest SHA-256 pins, and corpus pointer grounding.",
+          "required_environment": "Installed Matrix corpus (~/.kolmafia projection) and generated data/runtime/linkbus/registry.json"
+        },
+        {
+          "nodeid": "tests/test_work_records.py::test_provider_overlay_and_corpus_untouched",
+          "classification": "local_runtime",
+          "rationale": "Asserts the real generated provider overlay and installed Matrix corpus files are untouched; requires the generated registry, the generated overlay, and the installed corpus.",
+          "required_environment": "Generated data/runtime/linkbus/registry.json, data/runtime/matrix/kolmaf-overlay.json, and the installed Matrix corpus"
+        }
+      ]
+    },
+    "local_artifact": {
+      "purpose": "Requires intentionally non-public historical/source evaluation artifacts supplied via KOLMAF_PRIVATE_EVAL_ROOT. Deselected from the portable CI gate by marker; skips precisely when the root is unset.",
+      "public_ci": "deselected",
+      "tests": [
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_preserves_residual_multipart_child_shape[A074]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_preserves_residual_multipart_child_shape[A080]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_preserves_residual_multipart_child_shape[A084]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_uses_standard_malformed_request_clarification_prompt[A044]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_uses_standard_malformed_request_clarification_prompt[A046]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_dataset_projection_historical.py::test_projection_uses_standard_malformed_request_clarification_prompt[A048]",
+          "classification": "local_artifact",
+          "rationale": "Verifies dataset projection against the frozen expected-packets export from the intentionally non-public historical evaluation artifacts; byte-level alignment with historical evidence (multipart child shape, malformed-request clarification prompt).",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::TestPhase4HistoricalBindings::test_aligned_dataset_metadata_matches_frozen_bindings",
+          "classification": "local_artifact",
+          "rationale": "Verifies historical Phase 4 frozen bindings (schema_commit / schema_version metadata) against the non-public aligned dataset and expected-packets artifacts.",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase4_lifecycle_contracts.py::TestPhase4HistoricalBindings::test_expected_packets_metadata_matches_frozen_bindings",
+          "classification": "local_artifact",
+          "rationale": "Verifies historical Phase 4 frozen bindings (schema_commit / schema_version metadata) against the non-public aligned dataset and expected-packets artifacts.",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing adversarial-envelope-aligned-v2.0.0-preprototype.json and adversarial-envelope-expected-packets-v2.0.0-preprototype.json"
+        },
+        {
+          "nodeid": "tests/test_eval_historical_artifacts.py::test_original_artifact_sha256",
+          "classification": "local_artifact",
+          "rationale": "Verifies the non-public historical dataset.json and checkpoint-002.json bytes still match the frozen SHA-256 pins.",
+          "required_environment": "KOLMAF_PRIVATE_EVAL_ROOT containing dataset.json and checkpoint-002.json"
+        }
+      ]
+    },
+    "legacy": {
+      "purpose": "Targets historical superseded implementation (Phase 6 evaluator) no longer in the product. Deselected from the portable CI gate by marker; skips precisely when the historical source is not supplied.",
+      "public_ci": "deselected",
+      "tests": [
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase6_evaluation.py::test_build_actual_packet_consumes_package_dataset_projection",
+          "classification": "legacy",
+          "rationale": "Targets the historical Phase 6 offline evaluator script (phase6_eval.py), a superseded implementation no longer part of the product; retained for explicit legacy verification only, never a live implementation target.",
+          "required_environment": "KOLMAF_LEGACY_PHASE6_SCRIPT pointing directly at the historical phase6_eval.py file"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase6_evaluation.py::test_canonical_json_bytes_is_stable",
+          "classification": "legacy",
+          "rationale": "Targets the historical Phase 6 offline evaluator script (phase6_eval.py), a superseded implementation no longer part of the product; retained for explicit legacy verification only, never a live implementation target.",
+          "required_environment": "KOLMAF_LEGACY_PHASE6_SCRIPT pointing directly at the historical phase6_eval.py file"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase6_evaluation.py::test_diff_paths_reports_nested_mismatches",
+          "classification": "legacy",
+          "rationale": "Targets the historical Phase 6 offline evaluator script (phase6_eval.py), a superseded implementation no longer part of the product; retained for explicit legacy verification only, never a live implementation target.",
+          "required_environment": "KOLMAF_LEGACY_PHASE6_SCRIPT pointing directly at the historical phase6_eval.py file"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase6_evaluation.py::test_evaluate_once_produces_one_record_per_frozen_case",
+          "classification": "legacy",
+          "rationale": "Targets the historical Phase 6 offline evaluator script (phase6_eval.py), a superseded implementation no longer part of the product; retained for explicit legacy verification only, never a live implementation target.",
+          "required_environment": "KOLMAF_LEGACY_PHASE6_SCRIPT pointing directly at the historical phase6_eval.py file"
+        },
+        {
+          "nodeid": "tests/adversarial_envelope/test_phase6_evaluation.py::test_serialization_fails_closed_on_missing_safety_fields",
+          "classification": "legacy",
+          "rationale": "Targets the historical Phase 6 offline evaluator script (phase6_eval.py), a superseded implementation no longer part of the product; retained for explicit legacy verification only, never a live implementation target.",
+          "required_environment": "KOLMAF_LEGACY_PHASE6_SCRIPT pointing directly at the historical phase6_eval.py file"
+        }
+      ]
+    }
+  }
+}
