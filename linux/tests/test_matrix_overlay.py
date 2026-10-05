@@ -7,7 +7,10 @@ Taxonomy:
   (tests/fixtures/matrix/). No installed corpus, no generated
   data/runtime registry, no host paths.
 - `external_integration` tests assert the real provider constellation
-  composition (7 provider roots, 37 identities, 44 URIs).
+  composition (7 provider roots, 37 identities, 44 URIs) from the committed
+  manifests via the repository-contained semantic registry
+  (tests/fixtures/portable.py) plus the SYNTHETIC Matrix corpus. They need
+  no host state.
 - `local_runtime` tests assert against the real installed Matrix corpus
   (~/.kolmafia via the generated data/runtime registry): exact real-corpus
   counts (665 nodes / 13 workflows / 29 usecases), real mem:// grounding,
@@ -47,6 +50,7 @@ from fixtures.portable import (  # noqa: E402
     FIXTURE_ALIAS_GROUNDING,
     FIXTURE_NODE_COUNT,
     MATRIX_FIXTURE_HOME,
+    portable_registry,
     write_portable_registry,
 )
 
@@ -197,11 +201,16 @@ def test_fixture_manifest_pins_shaped():
 
 
 # --- projection: real provider constellation (integration profile) --------------
+# Repository-contained: the 7-provider / 37-identity / 44-URI constellation
+# is a property of the committed manifests (integration/providers) plus the
+# synthetic Matrix corpus (tests/fixtures/matrix). These tests compile the
+# overlay from write_portable_registry + MATRIX_FIXTURE_HOME so they validate
+# the integration surface itself with zero dependency on host state.
 
 
 @pytest.mark.external_integration
 def test_seven_provider_roots(tmp_path):
-    overlay = _built_overlay_real(tmp_path)
+    overlay = _built_overlay(tmp_path)
     assert overlay["schema"] == "kolmaf-overlay/v1"
     assert overlay["status"] == "active"
     assert overlay["root"]["overlay_id"] == "kolmaf-constellation"
@@ -213,16 +222,43 @@ def test_seven_provider_roots(tmp_path):
 
 @pytest.mark.external_integration
 def test_37_targets_44_uris_resolvable(tmp_path):
-    overlay = _built_overlay_real(tmp_path)
+    overlay = _built_overlay(tmp_path)
     assert overlay["counts"]["providers"] == 7
     assert overlay["counts"]["identities"] == 37
-    registry = _registry()
+    registry = portable_registry()
     expected = set(registry["identities"]) | {p["uri"] for p in registry["providers"]}
     assert len(expected) == 44
     for uri in expected:
         node, err = B.resolve_overlay(overlay, uri)
         assert err is None, uri
         assert node is not None and node["uri"] == uri
+
+
+def test_external_constellation_uses_repository_contained_inputs():
+    """Mixed-evidence regression: constellation assertions stay portable.
+
+    The two external_integration constellation tests must compile from the
+    repository-contained semantic registry plus the synthetic Matrix corpus.
+    They must not consume the host-runtime chain (REGISTRY_PATH /
+    _built_overlay_real / _matrix_home / installed-corpus helpers) for the
+    provider-constellation assertions. Host-runtime helpers remain for the
+    local_runtime corpus tests only.
+    """
+    import inspect
+
+    helper_src = inspect.getsource(_built_overlay)
+    assert "MATRIX_FIXTURE_HOME" in helper_src
+    assert "write_portable_registry" in helper_src or "_portable_registry_path" in helper_src
+    assert "REGISTRY_PATH" not in helper_src
+    assert "_matrix_home" not in helper_src
+    for fn in (test_seven_provider_roots, test_37_targets_44_uris_resolvable):
+        src = inspect.getsource(fn)
+        cleaned = src.replace("_portable_registry", "").replace("portable_registry", "")
+        assert "_built_overlay_real" not in src, fn.__name__
+        assert "_matrix_home" not in src, fn.__name__
+        assert "REGISTRY_PATH" not in src, fn.__name__
+        assert "_registry" not in cleaned, fn.__name__
+        assert "_built_overlay(" in src, fn.__name__
 
 
 # --- projection: portable compiler semantics --------------------------------------

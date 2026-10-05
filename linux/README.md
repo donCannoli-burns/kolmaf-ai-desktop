@@ -600,10 +600,17 @@ there are zero whole-file ignores and zero `-k` exclusions.
 | `local_artifact` | Intentionally private historical evidence | deselected | configured `KOLMAF_PRIVATE_EVAL_ROOT` |
 | `legacy` | Historical superseded implementation | deselected | optional historical source (`KOLMAF_LEGACY_PHASE6_SCRIPT`) |
 
-Current frozen counts: 664 portable + 21 `external_integration` + 9
-`local_runtime` + 9 `local_artifact` + 5 `legacy` = 708 unique tests, with
+Current frozen counts: 665 portable + 21 `external_integration` + 9
+`local_runtime` + 9 `local_artifact` + 5 `legacy` = 709 unique tests, with
 zero marker overlap (exactly one non-portable evidence class per
 non-portable test).
+
+`external_integration` may include repository-contained
+integration-surface tests (committed manifests plus synthetic fixtures)
+that pin the real provider constellation without host state;
+`local_runtime` is reserved for installed state. Explicit external runs
+may legitimately skip absent optional corpora (configured-absent
+skips, not portability debt).
 
 ## Source parity anchors
 

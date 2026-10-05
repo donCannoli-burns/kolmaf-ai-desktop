@@ -127,14 +127,12 @@
         {
           "nodeid": "tests/test_matrix_overlay.py::test_37_targets_44_uris_resolvable",
           "classification": "external_integration",
-          "rationale": "Asserts the real provider constellation composition (7 provider roots; 37 targets / 44 URIs resolvable) in the generated linkbus registry; fails closed when the generated registry is absent.",
-          "required_environment": "Generated data/runtime/linkbus/registry.json (build artifact of the committed integration/providers manifests)"
+          "rationale": "Asserts the real committed 7-provider/37-identity/44-URI surface via the repository-contained semantic registry derived from committed manifests plus the synthetic Matrix corpus; validates the integration surface itself."
         },
         {
           "nodeid": "tests/test_matrix_overlay.py::test_seven_provider_roots",
           "classification": "external_integration",
-          "rationale": "Asserts the real provider constellation composition (7 provider roots; 37 targets / 44 URIs resolvable) in the generated linkbus registry; fails closed when the generated registry is absent.",
-          "required_environment": "Generated data/runtime/linkbus/registry.json (build artifact of the committed integration/providers manifests)"
+          "rationale": "Asserts the real committed 7-provider/37-identity/44-URI surface via the repository-contained semantic registry derived from committed manifests plus the synthetic Matrix corpus; validates the integration surface itself."
         },
         {
           "nodeid": "tests/test_source_catalog_external.py::test_real_artifact_summary_is_deterministic_and_offline",
