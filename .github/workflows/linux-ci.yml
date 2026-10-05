@@ -19,7 +19,8 @@
 #   legacy: superseded historical tests. Deselected here.
 #
 # Test profile (portable offline only):
-#   - DevTest safety suite: linux/tests/devtest
+#   - DevTest safety suite: linux/tests/devtest with the same marker
+#     deselection as the portable gate below.
 #   - Portable offline test gate: linux/tests/ with marker deselection.
 #     Zero whole-file exclusions remain: every test file collects normally
 #     and marker deselection alone keeps non-portable tests out of the
@@ -29,7 +30,9 @@
 #     test_phase4_lifecycle_contracts.py::TestPhase4HistoricalBindings)
 #     is local_artifact and deselected by marker, and the historical Phase 6
 #     evaluator test (test_phase6_evaluation.py) is legacy and deselected
-#     by marker.
+#     by marker. Machine-local capability installation checks
+#     (tests/devtest/test_capability_registry_local.py) are local_runtime
+#     and marker-deselected here; they run only on operator hosts.
 # The portable checkpoint verifier
 # (linux/scripts/verify-native-can-equip-checkpoint-portable) runs here; it is
 # repository-only and never claims installed-runtime READY. The local
@@ -37,14 +40,12 @@
 # LOCAL_RUNTIME and never runs in GitHub: it requires the installed
 # ~/.kolmafia relay helper and local provider health.
 #
-# Known conditional skips (honest, recorded, not auto-failed):
-#   linux/tests/devtest/test_capability_registry.py::test_real_bundle_registry_matches_don_advertisement
-#     skips when the operator-host portable bundle registry
-#     (~/.local/share/kolmaf-ai/agent-bundle) is absent.
-#     Classification: LOCAL_RUNTIME.
-#   linux/tests/devtest/test_capability_registry.py::test_real_helper_health_is_ready
-#     skips when the installed ~/.kolmafia relay helper is absent.
-#     Classification: LOCAL_RUNTIME.
+# No known conditional skips: every test either runs portably against
+# repository-contained inputs or is marker-deselected. The two former
+# conditional-skip capability checks (bundle registry, installed helper
+# health) moved to tests/devtest/test_capability_registry_local.py and
+# are local_runtime: collected then deselected by marker here, executed
+# only on operator hosts with the real installation present.
 #
 # Live boundary: KOLMAFA_LIVE_RELAY_ENABLED is forced to the safest value
 # ("false") and no relay credential is provided, so ActionBroker._select_writer
@@ -90,7 +91,9 @@ jobs:
           python -m compileall -q linux/src linux/tests
           PYTHONPATH=linux/src python -c "import kolmafa, kolmafa.devtest.runtime, kolmafa.devtest.action_broker, kolmafa.devtest.relay_writer; print('import ok')"
       - name: DevTest safety suite
-        run: python -m pytest linux/tests/devtest -q
+        run: |
+          python -m pytest linux/tests/devtest -q \
+            -m "not external_integration and not local_runtime and not local_artifact and not legacy"
       - name: Portable offline test gate
         run: |
           python -m pytest linux/tests -q \

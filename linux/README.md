@@ -563,6 +563,22 @@ four artifact filenames above; missing artifacts skip precisely. The helper
 or download data. This is distinct from `local_runtime`, which covers
 machine-local installed KoLmafia state.
 
+**Portable vs `local_runtime` capability tests.** Portable capability tests
+(`tests/devtest/test_capability_registry.py`) require no operator installation:
+committed source, synthetic fixtures, and `tmp_path` only, with no
+machine-local paths and no conditional skips. `local_runtime` capability
+tests (`tests/devtest/test_capability_registry_local.py`) validate actual
+installed runtime state and are marker-deselected from public CI; they run
+only on operator hosts. Path configuration for the local tests:
+`KOLMAF_AGENT_BUNDLE_ROOT` (portable agent bundle root; registry at
+`<root>/data/capabilities/registry.json`; fallback
+`~/.local/share/kolmaf-ai/agent-bundle`) and `KOLMAFA_KOLMAFIA_HOME`
+(established `kolmafa.config` variable; installed helper at
+`<home>/relay/don_native_can_equip.ash`; fallback `~/.kolmafia`). Missing
+installations skip precisely; present-but-wrong installations fail. The
+local checkpoint verifier (`scripts/verify-native-can-equip-checkpoint-local`)
+shares these roots via `KOLMAFA_KOLMAFIA_HOME` and `KOLMAF_RUNTIME_ROOT`.
+
 ## Source parity anchors
 
 - Config variables and player validation: `src/kolmafa/config.py:11-85`.

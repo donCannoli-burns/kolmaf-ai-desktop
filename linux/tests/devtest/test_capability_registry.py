@@ -1,4 +1,10 @@
-"""Portable capability reconciliation tests (offline, fixtures only)."""
+"""Portable capability reconciliation tests (offline, fixtures only).
+
+Repository-contained inputs only: committed source, synthetic fixtures, and
+``tmp_path``. No operator installation state, no machine-local paths, no
+conditional skips. Machine-local installation checks live in
+``test_capability_registry_local.py`` (``local_runtime`` marker).
+"""
 
 from __future__ import annotations
 
@@ -127,35 +133,27 @@ def test_unknown_capabilities_remain_unavailable() -> None:
         get_spec("native.some-future-query")
 
 
-def test_real_bundle_registry_matches_don_advertisement() -> None:
-    import json
-
-    registry = Path("$HOME/.local/share/kolmaf-ai/agent-bundle/data/capabilities/registry.json")
-    if not registry.is_file():
-        pytest.skip("portable bundle registry absent")
-    entries = {c["id"]: c for c in json.loads(registry.read_text(encoding="utf-8"))["capabilities"]}
-    assert "native.can-equip" in entries
-    assert entries["native.can-equip"]["authority"] == "OBSERVATION_ONLY"
-    assert entries["native.can-equip"]["provider"] == "don-runtime"
-
-
-def test_real_helper_health_is_ready() -> None:
-    from kolmafa.devtest.native_relay import CANONICAL_HELPER_PATH, HELPER_FILENAME
-
-    installed = Path("$HOME/.kolmafia/relay") / HELPER_FILENAME
-    if not installed.is_file():
-        pytest.skip("installed helper absent")
-    result = check_native_health(
-        canonical=CANONICAL_HELPER_PATH,
-        installed=installed,
-        expected_sha256="666c8abd92935cabd7d9099b45e2d92814e9dced0e2540ee6d97614d77648944",
-    )
-    assert result["status"] == "READY"
-
-
 def test_module_has_no_execution_surface() -> None:
     text = (Path(__file__).resolve().parents[2] / "src" / "kolmafa" / "devtest" / "capability_registry.py").read_text(
         encoding="utf-8"
     )
     for forbidden in ("ActionBroker", "RelayWriter", "urlopen", "subprocess", "socket", "confirm_action", "sideCommand"):
         assert forbidden not in text
+
+
+def test_portable_file_has_no_machine_local_dependencies() -> None:
+    """Taxonomy guard: this portable file must not regain machine-local deps.
+
+    Machine-local installation checks belong to
+    ``test_capability_registry_local.py`` (``local_runtime`` marker), never
+    here. If a forbidden token appears, the file was re-coupled to operator
+    installation state and must be split again. The guard's own source is
+    excluded from the scan because its forbidden-token list necessarily
+    mentions the tokens it forbids.
+    """
+    import inspect
+
+    text = Path(__file__).read_text(encoding="utf-8")
+    text = text.replace(inspect.getsource(test_portable_file_has_no_machine_local_dependencies), "")
+    for forbidden in ("Path.home(", ".kolmafia", ".local/share/kolmaf-ai", "KOLMAF_AGENT_BUNDLE"):
+        assert forbidden not in text, f"portable capability test regained machine-local dependency: {forbidden}"
